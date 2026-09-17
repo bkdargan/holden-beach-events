@@ -15,4 +15,3 @@ print("Length:", len(response.text))
 
 print("\nFIRST 1000 CHARACTERS:\n")
 print(response.text[:1000])
-``
