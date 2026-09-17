@@ -29,20 +29,22 @@ foreach ($url in $urls)
         -replace '.*content="', '' `
         -replace '" */?>', ''
 
-    $dateMatch = :Match(
-        $description,
-        '(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}'
-    )
+    $dateMatch = ""
 
-    $timeMatch = :Match(
-        $description,
-        '\d{1,2}:\d{2}\s*(a\.m\.|p\.m\.)'
-    )
+    if ($description -match "(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}") {
+        $dateMatch = $matches[0]
+    }
+
+    $timeMatch = ""
+
+    if ($description -match "\d{1,2}:\d{2}\s*(a\.m\.|p\.m\.)") {
+        $timeMatch = $matches[0]
+    }
 
     $events += @{
         title = $title.Trim()
-        date = $dateMatch.Value
-        time = $timeMatch.Value
+        date = $dateMatch
+        time = $timeMatch
         description = $description.Trim()
         url = $url
     }
