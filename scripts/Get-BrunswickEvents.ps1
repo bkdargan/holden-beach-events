@@ -9,18 +9,9 @@ Write-Host ""
 
 $content = $response.Content
 
-$patterns = @(
-    "Sunset Beach Market",
-    "Southport Fall Market",
-    "Ocean Isle Beach Summer Concert Series"
-)
+$content |
+    Select-String `
+    -Pattern "api|json|events|event" `
+    -AllMatches
 
-foreach ($pattern in $patterns) {
-
-    if ($content.Contains($pattern)) {
-        Write-Host "FOUND: $pattern"
-    }
-    else {
-        Write-Host "NOT FOUND: $pattern"
-    }
-}
+Write-Host "Search Complete"
