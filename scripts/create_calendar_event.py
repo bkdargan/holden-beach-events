@@ -14,31 +14,43 @@ credentials = service_account.Credentials.from_service_account_info(
 
 service = build("calendar", "v3", credentials=credentials)
 
-with open("events.json", "r", encoding="utf-8") as f:
-    events = json.load(f)
+MONTHS = {
+    "May": "05",
+    "June": "06",
+    "July": "07",
+    "August": "08",
+    "September": "09"
+}
 
-for e in events:
+with open("concerts.json", "r") as f:
+    concerts = json.load(f)
 
-    title = e.get("title", "Untitled Event")
-    description = e.get("description", "")
-    url = e.get("url", "")
+for concert in concerts:
+
+    month = MONTHS[concert["month"]]
+    day = concert["day"].zfill(2)
+
+    start_date = f"2026-{month}-{day}"
 
     event = {
-        "summary": title,
-        "description": f"{description}\n\nSource: {url}",
-        "location": "Brunswick County, NC",
+        "summary": concert["title"],
+        "location": concert["location"],
+        "description": "Imported automatically from Holden Beach Concert Schedule",
         "start": {
-            "date": "2026-09-18"
+            "dateTime": f"{start_date}T18:30:00-04:00"
         },
         "end": {
-            "date": "2026-09-19"
+            "dateTime": f"{start_date}T20:00:00-04:00"
         }
     }
 
-    created_event = (
+    created = (
         service.events()
-        .insert(calendarId=calendar_id, body=event)
+        .insert(
+            calendarId=calendar_id,
+            body=event
+        )
         .execute()
     )
 
-    print(f"Created: {title}")
+    print(f"Created: {concert['title']}")
