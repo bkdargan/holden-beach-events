@@ -1,22 +1,27 @@
-Write-Host "Testing Brunswick Events Page"
+Write-Host "Finding Brunswick Event URLs"
 
 $listingPage = Invoke-WebRequest -Uri "https://www.ncbrunswick.com/events/"
 
-Write-Host ""
-Write-Host "Page downloaded successfully"
-Write-Host ""
-
 $content = $listingPage.Content
 
-if ($content -match "/event/")
+$lines = $content -split "`n"
+
+$count = 0
+
+foreach ($line in $lines)
 {
-    Write-Host "FOUND EVENT LINKS"
-}
-else
-{
-    Write-Host "NO EVENT LINKS FOUND"
+    if ($line -like "*https://www.ncbrunswick.com/event/*")
+    {
+        Write-Host $line
+
+        $count++
+
+        if ($count -ge 10)
+        {
+            break
+        }
+    }
 }
 
 Write-Host ""
-Write-Host "Page Length:"
-Write-Host $content.Length
+Write-Host "Done"
