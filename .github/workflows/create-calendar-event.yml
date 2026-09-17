@@ -10,13 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: Run Calendar Event Script
-        shell: pwsh
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
-        run: ./scripts/Create-TestCalendarEvent.ps1
-
-      - name: Show Calendar Event JSON
         run: |
-          cat test-event.json
+          python scripts/create_calendar_event.py
