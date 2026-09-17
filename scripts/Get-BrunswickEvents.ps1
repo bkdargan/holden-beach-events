@@ -1,4 +1,6 @@
-Write-Host "Brunswick Event Collection"
+Write-Host "Creating Event JSON"
+
+$events = @()
 
 $urls = @(
     "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/",
@@ -23,12 +25,13 @@ foreach ($url in $urls)
         Where-Object { $_ -match 'meta name="description"' } |
         Select-Object -First 1
 
-    Write-Host ""
-    Write-Host "======================="
-    Write-Host "TITLE: $title"
-    Write-Host ""
-    Write-Host "DESCRIPTION:"
-    Write-Host $descLine
-    Write-Host ""
-    Write-Host "URL: $url"
+    $events += @{
+        title = $title.Trim()
+        description = $descLine.Trim()
+        url = $url
+    }
 }
+
+$events | ConvertTo-Json -Depth 3 | Out-File events.json
+
+Write-Host "Created events.json"
