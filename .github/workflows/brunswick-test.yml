@@ -1,0 +1,15 @@
+name: Brunswick Event Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Event Collector
+        shell: pwsh
+        run: ./scripts/Get-BrunswickEvents.ps1
