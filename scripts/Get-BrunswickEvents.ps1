@@ -1,25 +1,27 @@
-Write-Host "Brunswick Event Import Test"
+Write-Host "Brunswick Event Extraction Test"
 
-$urls = @(
-    "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/",
-    "https://www.ncbrunswick.com/event/southport-fall-market/2543/",
-    "https://www.ncbrunswick.com/event/live-%26-local%3a-music-%2b-market/2348/"
+$url = "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/"
+
+$response = Invoke-WebRequest -Uri $url
+
+$content = $response.Content
+
+Write-Host ""
+Write-Host "Searching for title..."
+
+$patterns = @(
+    "Ocean Isle Beach Summer Concert Series",
+    "Town Center Park",
+    "September",
+    "6:30 PM"
 )
 
-foreach ($url in $urls) {
+foreach ($pattern in $patterns) {
 
-    Write-Host ""
-    Write-Host "Checking:"
-    Write-Host $url
-
-    try {
-        $response = Invoke-WebRequest -Uri $url
-
-        Write-Host "SUCCESS"
-        Write-Host "Length: $($response.Content.Length)"
+    if ($content.Contains($pattern)) {
+        Write-Host "FOUND: $pattern"
     }
-    catch {
-        Write-Host "FAILED"
-        Write-Host $_
+    else {
+        Write-Host "NOT FOUND: $pattern"
     }
 }
