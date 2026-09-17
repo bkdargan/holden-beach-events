@@ -1,0 +1,13 @@
+name: Create Test Event
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test Workflow
+        run: |
+          echo "Create Test Event workflow is running"
