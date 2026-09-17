@@ -1,24 +1,25 @@
-Write-Host "Brunswick Event Extractor"
+Write-Host "Brunswick Event Object"
 
 $url = "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/"
 
 $response = Invoke-WebRequest -Uri $url
-
 $content = $response.Content
 
-$lines = $content -split "`n"
+$titleLine = ($content -split "`n") | Where-Object {
+    $_ -match "<title>"
+} | Select-Object -First 1
 
-foreach ($line in $lines) {
+$descLine = ($content -split "`n") | Where-Object {
+    $_ -match 'meta name="description"'
+} | Select-Object -First 1
 
-    if ($line -like "*<title>*") {
-        Write-Host ""
-        Write-Host "TITLE:"
-        Write-Host $line
-    }
-
-    if ($line -like '*meta name="description"*') {
-        Write-Host ""
-        Write-Host "DESCRIPTION:"
-        Write-Host $line
-    }
-}
+Write-Host ""
+Write-Host "======================="
+Write-Host "EVENT RECORD"
+Write-Host "======================="
+Write-Host $titleLine
+Write-Host ""
+Write-Host $descLine
+Write-Host ""
+Write-Host "URL:"
+Write-Host $url
