@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  create-event:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +15,12 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run Calendar Event Script
+      - name: Install Google Libraries
+        run: |
+          pip install google-api-python-client
+          pip install google-auth
+
+      - name: Create Google Calendar Event
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
