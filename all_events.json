@@ -2,17 +2,15 @@
   {
     "source": "concerts",
     "title": "...",
-    "date": "...",
-    "location": "..."
+    "date_time": "...",
+    "location": "...",
+    "description": "..."
   },
   {
     "source": "hobbs",
     "title": "...",
-    "url": "..."
-  },
-  {
-    "source": "coastal",
-    "title": "...",
-    "url": "..."
+    "date_time": "...",
+    "location": "...",
+    "description": "..."
   }
 ]
