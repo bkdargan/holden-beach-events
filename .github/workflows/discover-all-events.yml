@@ -23,6 +23,6 @@ jobs:
         run: |
           python scripts/discover_all_events.py
 
-      - name: Show Hobbs Events
+      - name: Show Hobbs Events JSON
         run: |
           cat hobbs_events.json
