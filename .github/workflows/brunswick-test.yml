@@ -14,8 +14,12 @@ jobs:
         shell: pwsh
         run: ./scripts/Get-BrunswickEvents.ps1
 
-      - name: Upload Event Page
+      - name: Upload Events JSON
         uses: actions/upload-artifact@v4
         with:
-          name: event-page
-          path: event-page.html
+          name: events-json
+          path: events.json
+
+      - name: Show Events JSON
+        run: |
+          cat events.json
