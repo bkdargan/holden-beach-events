@@ -21,4 +21,3 @@ print('Total events:', len(data))
 
 for event in data:
     print(event['title'])
-"
