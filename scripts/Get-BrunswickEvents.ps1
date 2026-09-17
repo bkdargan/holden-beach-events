@@ -25,9 +25,13 @@ foreach ($url in $urls)
         Where-Object { $_ -match 'meta name="description"' } |
         Select-Object -First 1
 
+    $description = $descLine `
+        -replace '.*content="', '' `
+        -replace '" */?>', ''
+
     $events += @{
         title = $title.Trim()
-        description = $descLine.Trim()
+        description = $description.Trim()
         url = $url
     }
 }
