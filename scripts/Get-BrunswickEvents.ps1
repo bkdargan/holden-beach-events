@@ -1,26 +1,27 @@
-Write-Host "Brunswick Event Object"
+Write-Host "Brunswick Event Collection"
 
-$url = "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/"
+$urls = @(
+    "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/",
+    "https://www.ncbrunswick.com/event/southport-fall-market/2543/",
+    "https://www.ncbrunswick.com/event/live-%26-local%3a-music-%2b-market/2348/"
+)
 
-$response = Invoke-WebRequest -Uri $url
+foreach ($url in $urls)
+{
+    $response = Invoke-WebRequest -Uri $url
 
-$content = $response.Content
+    $content = $response.Content
 
-$titleLine = ($content -split "`n") |
-    Where-Object { $_ -match "<title>" } |
-    Select-Object -First 1
+    $titleLine = ($content -split "`n") |
+        Where-Object { $_ -match "<title>" } |
+        Select-Object -First 1
 
-$title = $titleLine `
-    -replace "<title>", "" `
-    -replace "</title>", ""
+    $title = $titleLine `
+        -replace "<title>", "" `
+        -replace "</title>", ""
 
-Write-Host ""
-Write-Host "======================="
-Write-Host "EVENT RECORD"
-Write-Host "======================="
-Write-Host ""
-Write-Host "TITLE:"
-Write-Host $title
-Write-Host ""
-Write-Host "URL:"
-Write-Host $url
+    Write-Host ""
+    Write-Host "======================="
+    Write-Host "TITLE: $title"
+    Write-Host "URL: $url"
+}
