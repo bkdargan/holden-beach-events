@@ -8,17 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Verify Google Secrets
+      - name: Write Credentials File
         run: |
-          echo "Testing Google configuration..."
-          echo "Google secrets found successfully"
+          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
 
-      - name: Display Calendar ID Length
+      - name: Verify Credentials File
         run: |
-          echo "Calendar ID length:"
-          echo "${{ secrets.GOOGLE_CALENDAR_ID }}" | wc -c
-
-      - name: Display Credentials Length
-        run: |
-          echo "Credentials length:"
-          echo "${{ secrets.GOOGLE_CREDENTIALS }}" | wc -c
+          echo "File created successfully"
+          wc -c credentials.json
