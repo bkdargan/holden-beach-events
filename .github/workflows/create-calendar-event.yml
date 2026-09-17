@@ -1,44 +1,28 @@
-import json
-import os
+name: Create Calendar Event
 
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+on:
+  workflow_dispatch:
 
-credentials_json = json.loads(os.environ["GOOGLE_CREDENTIALS"])
-calendar_id = os.environ["GOOGLE_CALENDAR_ID"]
+jobs:
+  create-event:
+    runs-on: ubuntu-latest
 
-credentials = service_account.Credentials.from_service_account_info(
-    credentials_json,
-    scopes=["https://www.googleapis.com/auth/calendar"]
-)
+    steps:
+      - uses: actions/checkout@v4
 
-service = build("calendar", "v3", credentials=credentials)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-with open("events.json", "r", encoding="utf-8") as f:
-    events = json.load(f)
+      - name: Install Google Libraries
+        run: |
+          pip install google-api-python-client
+          pip install google-auth
 
-for e in events:
-
-    title = e.get("title", "Untitled Event")
-    description = e.get("description", "")
-    url = e.get("url", "")
-
-    event = {
-        "summary": title,
-        "description": f"{description}\n\nSource: {url}",
-        "location": "Brunswick County, NC",
-        "start": {
-            "date": "2026-09-18"
-        },
-        "end": {
-            "date": "2026-09-19"
-        }
-    }
-
-    created_event = (
-        service.events()
-        .insert(calendarId=calendar_id, body=event)
-        .execute()
-    )
-
-    print(f"Created: {title}")
+      - name: Create Google Calendar Event
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+        run: |
+          python scripts/create_calendar_event.py
