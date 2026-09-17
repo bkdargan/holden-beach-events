@@ -1,18 +1,25 @@
-Write-Host "Starting Brunswick County event collection..."
+Write-Host "Brunswick Event Import Test"
 
-$url = "https://www.ncbrunswick.com/events/"
+$urls = @(
+    "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/",
+    "https://www.ncbrunswick.com/event/southport-fall-market/2543/",
+    "https://www.ncbrunswick.com/event/live-%26-local%3a-music-%2b-market/2348/"
+)
 
-$response = Invoke-WebRequest -Uri $url
+foreach ($url in $urls) {
 
-Write-Host "Page downloaded successfully"
-Write-Host ""
+    Write-Host ""
+    Write-Host "Checking:"
+    Write-Host $url
 
-$regex = 'https?:\/\/[^"\''\s<>]+'
+    try {
+        $response = Invoke-WebRequest -Uri $url
 
-$matches = :Matches($response.Content, $regex)
-
-$matches |
-    Select-Object -First 100 |
-    ForEach-Object {
-        Write-Host $_.Value
+        Write-Host "SUCCESS"
+        Write-Host "Length: $($response.Content.Length)"
     }
+    catch {
+        Write-Host "FAILED"
+        Write-Host $_
+    }
+}
