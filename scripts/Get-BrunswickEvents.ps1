@@ -1,12 +1,15 @@
-Write-Host "Brunswick Event Structured Data Test"
+Write-Host "Brunswick Event Parser Test"
 
 $url = "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/"
 
 $response = Invoke-WebRequest -Uri $url
 
-$content = $response.Content
+$titleMatch = :Match(
+    $response.Content,
+    '<title>(.*?)</title>'
+)
 
-$content |
-    Select-String `
-    -Pattern '"name":"|Town Center Park|addressLocality|postalCode' `
-    -AllMatches
+Write-Host ""
+Write-Host "TITLE FOUND:"
+Write-Host $titleMatch.Groups[1].Value
+`
