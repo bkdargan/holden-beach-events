@@ -2,54 +2,75 @@ Write-Host "Creating Event JSON"
 
 $events = @()
 
-$urls = @(
-    "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/",
-    "https://www.ncbrunswick.com/event/southport-fall-market/2543/",
-    "https://www.ncbrunswick.com/event/live-%26-local%3a-music-%2b-market/2348/"
-)
+# Download Brunswick County event page
+$listingPage = Invoke-WebRequest -Uri "https://www.ncbrunswick.com/events/"
+
+# Extract event URLs
+$urlPattern = 'https://www\.ncbrunswick\.com/event/[^"]+'
+
+$urls = :Matches($listingPage.Content, $urlPattern) |
+    ForEach-Object { $_.Value } |
+    Sort-Object -Unique
+
+Write-Host "Found $($urls.Count) event URLs"
 
 foreach ($url in $urls)
 {
-    $response = Invoke-WebRequest -Uri $url
-    $content = $response.Content
+    try
+    {
+        Write-Host "Processing: $url"
 
-    $titleLine = ($content -split "`n") |
-        Where-Object { $_ -match "<title>" } |
-        Select-Object -First 1
+        $response = Invoke-WebRequest -Uri $url
+        $content = $response.Content
 
-    $title = $titleLine `
-        -replace "<title>", "" `
-        -replace "</title>", ""
+        $titleLine = ($content -split "`n") |
+            Where-Object { $_ -match "<title>" } |
+            Select-Object -First 1
 
-    $descLine = ($content -split "`n") |
-        Where-Object { $_ -match 'meta name="description"' } |
-        Select-Object -First 1
+        $title = $titleLine `
+            -replace "<title>", "" `
+            -replace "</title>", ""
 
-    $description = $descLine `
-        -replace '.*content="', '' `
-        -replace '" */?>', ''
+        $descLine = ($content -split "`n") |
+            Where-Object { $_ -match 'meta name="description"' } |
+            Select-Object -First 1
 
-    $dateMatch = ""
+        $description = $descLine `
+            -replace '.*content="', '' `
+            -replace '" */?>', ''
 
-    if ($description -match "(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}") {
-        $dateMatch = $matches[0]
+        $dateMatch = ""
+
+        if ($description -match "(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}")
+        {
+            $dateMatch = $matches[0]
+        }
+
+        $timeMatch = ""
+
+        if ($description -match "\d{1,2}:\d{2}\s*(a\.m\.|p\.m\.)")
+        {
+            $timeMatch = $matches[0]
+        }
+
+        $events += @{
+            title = $title.Trim()
+            date = $dateMatch
+            time = $timeMatch
+            description = $description.Trim()
+            url = $url
+        }
     }
-
-    $timeMatch = ""
-
-    if ($description -match "\d{1,2}:\d{2}\s*(a\.m\.|p\.m\.)") {
-        $timeMatch = $matches[0]
-    }
-
-    $events += @{
-        title = $title.Trim()
-        date = $dateMatch
-        time = $timeMatch
-        description = $description.Trim()
-        url = $url
+    catch
+    {
+        Write-Host "Failed: $url"
     }
 }
 
-$events | ConvertTo-Json -Depth 3 | Out-File events.json
+$events |
+    ConvertTo-Json -Depth 5 |
+    Out-File events.json
 
+Write-Host ""
 Write-Host "Created events.json"
+Write-Host "Total Events: $($events.Count)"
