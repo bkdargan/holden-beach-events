@@ -1,12 +1,24 @@
-- name: Set up Python
-  uses: actions/setup-python@v5
-  with:
-    python-version: '3.11'
+name: Brunswick Event Test
 
-- name: Install Libraries
-  run: |
-    pip install requests
+on:
+  workflow_dispatch:
 
-- name: Discover Events
-  run: |
-    python scripts/discover_events.py
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Libraries
+        run: |
+          pip install requests
+
+      - name: Discover Events
+        run: |
+          python scripts/discover_events.py
