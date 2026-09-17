@@ -30,3 +30,4 @@ with open("concerts.json", "w") as f:
     json.dump(events, f, indent=2)
 
 print(f"Concerts Found: {len(events)}")
+print("Created concerts.json")
