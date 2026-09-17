@@ -10,6 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run Event Collector
+      - name: Run Brunswick Import Test
         shell: pwsh
         run: ./scripts/Get-BrunswickEvents.ps1
