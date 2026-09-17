@@ -43,3 +43,6 @@ with open("hobbs_events.json", "w") as f:
     json.dump(events, f, indent=2)
 
 print("Created hobbs_events.json")
+      - name: Show hobbs_events.json
+        run: |
+          cat hobbs_events.json
