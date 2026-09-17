@@ -1,37 +1,43 @@
 import requests
 from bs4 import BeautifulSoup
 
-SOURCES = [
-    {
-        "name": "Hobbs Realty",
-        "url": "https://www.hobbsrealty.com/holden-beach-events"
-    },
-    {
-        "name": "Coastal Vacation Resorts",
-        "url": "https://www.coastalvacationresorts.com/holden-beach-events"
-    }
+sites = [
+    "https://www.hobbsrealty.com/holden-beach-events",
+    "https://www.coastalvacationresorts.com/holden-beach-events"
 ]
 
-for source in SOURCES:
+for site in sites:
 
     print("\n" + "=" * 80)
-    print(source["name"])
+    print(site)
 
     response = requests.get(
-        source["url"],
-        headers={"User-Agent": "Mozilla/5.0"},
-        timeout=30
+        site,
+        headers={"User-Agent": "Mozilla/5.0"}
     )
 
     soup = BeautifulSoup(response.text, "html.parser")
 
-    print("\nTITLE:")
-    print(soup.title.text)
+    print("\nLINKS:\n")
 
-    print("\nHEADINGS:")
+    count = 0
 
-    for heading in soup.find_all(["h1", "h2", "h3"]):
-        text = heading.get_text(" ", strip=True)
+    for link in soup.find_all("a", href=True):
 
-        if text:
+        text = link.get_text(" ", strip=True)
+
+        if (
+            "festival" in text.lower()
+            or "market" in text.lower()
+            or "yoga" in text.lower()
+            or "tournament" in text.lower()
+            or "tour" in text.lower()
+        ):
             print(text)
+            print(link["href"])
+            print()
+
+            count += 1
+
+            if count >= 20:
+                break
