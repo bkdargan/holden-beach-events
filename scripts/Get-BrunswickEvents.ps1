@@ -1,12 +1,10 @@
-Write-Host "Brunswick Event Data Test"
+Write-Host "Saving Event Page"
 
 $url = "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series/2087/"
 
 $response = Invoke-WebRequest -Uri $url
 
-$content = $response.Content
+$response.Content | Out-File event-page.html
 
-$content |
-    Select-String `
-    -Pattern "Ocean Isle Beach Summer Concert Series|Town Center Park|September 18|6:30 p.m." `
-    -AllMatches
+Write-Host "Event page saved"
+Write-Host "Length: $($response.Content.Length)"
