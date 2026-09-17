@@ -11,8 +11,3 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Calendar Event Script
-        shell: pwsh
-        env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
-        run: ./scripts/Create-TestCalendarEvent.ps1
