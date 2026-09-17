@@ -8,6 +8,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Test Workflow
+      - name: Verify Google Secrets
         run: |
-          echo "Create Test Event workflow is running"
+          echo "Testing Google configuration..."
+
+          if [ -z "${{ secrets.GOOGLE_CALENDAR_ID }}" ]; then
+            echo "Calendar ID missing"
+            exit 1
+          fi
+
+          if [ -z "${{ secrets.GOOGLE_CREDENTIALS }}" ]; then
+            echo "Credentials missing"
+            exit 1
+          fi
+
+          echo "Google secrets found successfully"
