@@ -3,6 +3,9 @@ name: Brunswick Event Test
 on:
   workflow_dispatch:
 
+  schedule:
+    - cron: '0 10 * * *'
+
 jobs:
   test:
     runs-on: ubuntu-latest
