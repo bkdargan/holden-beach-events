@@ -1,44 +1,45 @@
+import json
 import requests
 from bs4 import BeautifulSoup
 
-url = "https://www.hobbsrealty.com/events/festivals/north-carolina-oyster-festival"
+BASE = "https://www.hobbsrealty.com"
 
-response = requests.get(
-    url,
-    headers={"User-Agent": "Mozilla/5.0"},
-    timeout=30
-)
+links = [
+    "/events/festivals/north-carolina-oyster-festival",
+    "/events/festivals/north-carolina-festival-sea-holden-beach",
+    "/events/festivals/yoga-bridgeview-park",
+    "/events/weekly-events/sunset-beach-market-park",
+    "/events/sports-competitions/us-open-king-mackerel-tournament"
+]
 
-print("Status:", response.status_code)
-print("Length:", len(response.text))
+events = []
 
-soup = BeautifulSoup(response.text, "html.parser")
+for link in links:
 
-print("\nTITLE:\n")
-print(soup.title.text)
+    url = BASE + link
 
-print("\nHEADINGS:\n")
+    print("Checking:", url)
 
-for heading in soup.find_all(["h1", "h2", "h3"]):
-    text = heading.get_text(" ", strip=True)
+    response = requests.get(
+        url,
+        headers={"User-Agent": "Mozilla/5.0"}
+    )
 
-    if text:
-        print(text)
+    soup = BeautifulSoup(response.text, "html.parser")
 
-print("\nFIRST PARAGRAPHS:\n")
+    title = ""
 
-count = 0
+    h1 = soup.find("h1")
 
-for p in soup.find_all("p"):
+    if h1:
+        title = h1.get_text(" ", strip=True)
 
-    text = p.get_text(" ", strip=True)
+    events.append({
+        "title": title,
+        "url": url
+    })
 
-    if len(text) > 40:
+with open("hobbs_events.json", "w") as f:
+    json.dump(events, f, indent=2)
 
-        print(text)
-        print()
-
-        count += 1
-
-        if count >= 10:
-            break
+print("Created hobbs_events.json")
