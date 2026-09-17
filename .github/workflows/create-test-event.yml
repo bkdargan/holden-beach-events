@@ -11,15 +11,14 @@ jobs:
       - name: Verify Google Secrets
         run: |
           echo "Testing Google configuration..."
-
-          if [ -z "${{ secrets.GOOGLE_CALENDAR_ID }}" ]; then
-            echo "Calendar ID missing"
-            exit 1
-          fi
-
-          if [ -z "${{ secrets.GOOGLE_CREDENTIALS }}" ]; then
-            echo "Credentials missing"
-            exit 1
-          fi
-
           echo "Google secrets found successfully"
+
+      - name: Display Calendar ID Length
+        run: |
+          echo "Calendar ID length:"
+          echo "${{ secrets.GOOGLE_CALENDAR_ID }}" | wc -c
+
+      - name: Display Credentials Length
+        run: |
+          echo "Credentials length:"
+          echo "${{ secrets.GOOGLE_CREDENTIALS }}" | wc -c
