@@ -1,0 +1,11 @@
+{
+  "summary": "Holden Beach Automation Test",
+  "location": "Holden Beach, NC",
+  "description": "Created automatically by GitHub Actions",
+  "start": {
+    "dateTime": "2026-09-18T10:00:00-04:00"
+  },
+  "end": {
+    "dateTime": "2026-09-18T11:00:00-04:00"
+  }
+}
