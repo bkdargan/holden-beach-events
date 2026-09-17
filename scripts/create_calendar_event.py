@@ -32,8 +32,19 @@ for concert in concerts:
 
     start_date = f"2026-{month}-{day}"
 
+    title = concert["title"]
+
+    existing_events = service.events().list(
+        calendarId=calendar_id,
+        q=title
+    ).execute()
+
+    if existing_events.get("items"):
+        print(f"SKIPPED (already exists): {title}")
+        continue
+
     event = {
-        "summary": concert["title"],
+        "summary": title,
         "location": concert["location"],
         "description": "Imported automatically from Holden Beach Concert Schedule",
         "start": {
@@ -44,13 +55,9 @@ for concert in concerts:
         }
     }
 
-    created = (
-        service.events()
-        .insert(
-            calendarId=calendar_id,
-            body=event
-        )
-        .execute()
-    )
+    service.events().insert(
+        calendarId=calendar_id,
+        body=event
+    ).execute()
 
-    print(f"Created: {concert['title']}")
+    print(f"CREATED: {title}")
