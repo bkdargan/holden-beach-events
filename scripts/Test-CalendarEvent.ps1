@@ -1,9 +1,15 @@
-Write-Host "Calendar Write Test"
+Write-Host "Creating Calendar Event Payload"
+
+$event = @{
+    summary = "Holden Beach Automation Test"
+    description = "Created automatically by GitHub Actions"
+    location = "Holden Beach, NC"
+}
+
+$event | ConvertTo-Json | Out-File test-event.json
 
 Write-Host ""
-Write-Host "Calendar ID Found:"
-Write-Host $env:GOOGLE_CALENDAR_ID
+Write-Host "Created test-event.json"
 
 Write-Host ""
-Write-Host "Credentials Length:"
-Write-Host $env:GOOGLE_CREDENTIALS.Length
+Get-Content test
