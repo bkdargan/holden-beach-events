@@ -68,4 +68,3 @@ with open("coastal_events.json", "w") as f:
     json.dump(events, f, indent=2)
 
 print(f"Created coastal_events.json with {len(events)} events")
-`
