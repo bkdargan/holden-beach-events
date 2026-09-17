@@ -1,31 +1,25 @@
 import requests
+from bs4 import BeautifulSoup
 
-sites = [
-    "https://www.carolinabreezevacations.com/holden-beach-area-events",
-    "https://hbtownhall.com/parks-%26-recreation",
-    "https://www.townplanner.com/holden-beach/nc/",
-    "https://holdenbeachnc.com/holden-beach-concert-schedule/",
-    "https://www.coastalvacationresorts.com/holden-beach-events",
-    "https://www.hobbsrealty.com/holden-beach-events",
-    "https://www.eventbrite.com/d/nc--holden-beach/events/",
-    "https://www.ncbrunswick.com/events/"
-]
+url = "https://holdenbeachnc.com/holden-beach-concert-schedule/"
 
-for site in sites:
-    print("\n" + "=" * 80)
-    print(site)
+response = requests.get(
+    url,
+    headers={"User-Agent": "Mozilla/5.0"}
+)
 
-    try:
-        response = requests.get(
-            site,
-            headers={
-                "User-Agent": "Mozilla/5.0"
-            },
-            timeout=30
-        )
+print("Status:", response.status_code)
+print("Length:", len(response.text))
 
-        print("Status Code:", response.status_code)
-        print("Length:", len(response.text))
+soup = BeautifulSoup(response.text, "html.parser")
 
-    except Exception as ex:
-        print("ERROR:", ex)
+print("\nTITLE:")
+print(soup.title.text)
+
+print("\nHEADINGS:")
+
+for heading in soup.find_all(["h1", "h2", "h3"])[:20]:
+    text = heading.get_text(strip=True)
+
+    if text:
+        print(text)
