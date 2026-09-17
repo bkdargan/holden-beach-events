@@ -4,12 +4,11 @@ $url = "https://www.ncbrunswick.com/event/ocean-isle-beach-summer-concert-series
 
 $response = Invoke-WebRequest -Uri $url
 
-$titleMatch = :Match(
-    $response.Content,
-    '<title>(.*?)</title>'
-)
+$content = $response.Content
+
+$titleLine = $content |
+    Select-String "<title>"
 
 Write-Host ""
-Write-Host "TITLE FOUND:"
-Write-Host $titleMatch.Groups[1].Value
-`
+Write-Host "TITLE LINE:"
+Write-Host $titleLine
