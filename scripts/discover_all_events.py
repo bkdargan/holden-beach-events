@@ -1,48 +1,28 @@
-import json
-import requests
-from bs4 import BeautifulSoup
+name: Discover All Events
 
-BASE = "https://www.hobbsrealty.com"
+on:
+  workflow_dispatch:
 
-links = [
-    "/events/festivals/north-carolina-oyster-festival",
-    "/events/festivals/north-carolina-festival-sea-holden-beach",
-    "/events/festivals/yoga-bridgeview-park",
-    "/events/weekly-events/sunset-beach-market-park",
-    "/events/sports-competitions/us-open-king-mackerel-tournament"
-]
+jobs:
+  discover:
+    runs-on: ubuntu-latest
 
-events = []
+    steps:
+      - uses: actions/checkout@v4
 
-for link in links:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    url = BASE + link
+      - name: Install Libraries
+        run: |
+          pip install requests beautifulsoup4
 
-    print("Checking:", url)
+      - name: Discover Events
+        run: |
+          python scripts/discover_all_events.py
 
-    response = requests.get(
-        url,
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
-
-    soup = BeautifulSoup(response.text, "html.parser")
-
-    title = ""
-
-    h1 = soup.find("h1")
-
-    if h1:
-        title = h1.get_text(" ", strip=True)
-
-    events.append({
-        "title": title,
-        "url": url
-    })
-
-with open("hobbs_events.json", "w") as f:
-    json.dump(events, f, indent=2)
-
-print("Created hobbs_events.json")
-      - name: Show hobbs_events.json
+      - name: Show Hobbs Events
         run: |
           cat hobbs_events.json
