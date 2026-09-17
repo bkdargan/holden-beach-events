@@ -13,14 +13,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: Install Google Libraries
+      - name: Install Libraries
         run: |
           pip install google-api-python-client
           pip install google-auth
 
-      - name: Create Google Calendar Event
+      - name: Create Holden Beach Concert Events
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
