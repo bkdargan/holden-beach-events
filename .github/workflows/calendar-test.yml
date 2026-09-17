@@ -1,0 +1,18 @@
+name: Calendar Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show Repository Contents
+        run: ls -R
+
+      - name: Run PowerShell Script
+        shell: pwsh
+        run: ./scripts/Create-TestEvent.ps1
