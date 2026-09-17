@@ -1,0 +1,24 @@
+name: Validate Events
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count Events
+        run: |
+          python -c "
+import json
+with open('all_events.json') as f:
+    data = json.load(f)
+
+print('Total events:', len(data))
+
+for event in data:
+    print(event['title'])
+"
