@@ -7,6 +7,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -14,12 +17,13 @@ jobs:
         shell: pwsh
         run: ./scripts/Get-BrunswickEvents.ps1
 
-      - name: Upload Events JSON
-        uses: actions/upload-artifact@v4
-        with:
-          name: events-json
-          path: events.json
-
-      - name: Show Events JSON
+      - name: Commit events.json
         run: |
-          cat events.json
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add events.json
+
+          git diff --staged --quiet || git commit -m "Update events.json"
+
+          git push
