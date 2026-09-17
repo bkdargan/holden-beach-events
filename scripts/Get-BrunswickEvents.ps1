@@ -7,11 +7,12 @@ $response = Invoke-WebRequest -Uri $url
 Write-Host "Page downloaded successfully"
 Write-Host ""
 
-$content = $response.Content
+$regex = 'https?:\/\/[^"\''\s<>]+'
 
-$content |
-    Select-String `
-    -Pattern "api|json|events|event" `
-    -AllMatches
+$matches = :Matches($response.Content, $regex)
 
-Write-Host "Search Complete"
+$matches |
+    Select-Object -First 100 |
+    ForEach-Object {
+        Write-Host $_.Value
+    }
