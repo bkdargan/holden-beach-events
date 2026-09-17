@@ -3,41 +3,32 @@ import json
 all_events = []
 seen = set()
 
-# Concerts
-try:
-    with open("concerts.json", "r") as f:
-        concerts = json.load(f)
+def add_events(filename, source):
 
-    for event in concerts:
+    try:
 
-        key = event["title"].lower().strip()
+        with open(filename, "r") as f:
+            events = json.load(f)
 
-        if key not in seen:
-            seen.add(key)
+        for event in events:
 
-            event["source"] = "concerts"
-            all_events.append(event)
+            key = event["title"].lower().strip()
 
-except FileNotFoundError:
-    print("concerts.json not found")
+            if key not in seen:
 
-# Hobbs
-try:
-    with open("hobbs_events.json", "r") as f:
-        hobbs = json.load(f)
+                seen.add(key)
 
-    for event in hobbs:
+                event["source"] = source
 
-        key = event["title"].lower().strip()
+                all_events.append(event)
 
-        if key not in seen:
-            seen.add(key)
+    except FileNotFoundError:
 
-            event["source"] = "hobbs"
-            all_events.append(event)
+        print(f"{filename} not found")
 
-except FileNotFoundError:
-    print("hobbs_events.json not found")
+add_events("concerts.json", "concerts")
+add_events("hobbs_events.json", "hobbs")
+add_events("coastal_events.json", "coastal")
 
 with open("all_events.json", "w") as f:
     json.dump(all_events, f, indent=2)
