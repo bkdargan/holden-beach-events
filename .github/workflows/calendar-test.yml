@@ -10,9 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Show Repository Contents
-        run: ls -R
-
-      - name: Run PowerShell Script
+      - name: Run Google Calendar Test
         shell: pwsh
-        run: ./scripts/Create-TestEvent.ps1
+        run: ./scripts/Create-GoogleCalendarEvents.ps1
