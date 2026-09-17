@@ -1,5 +1,4 @@
 import requests
-from bs4 import BeautifulSoup
 
 url = "https://www.ncbrunswick.com/events/"
 
@@ -12,5 +11,5 @@ print("\nSearching for event links...\n")
 
 for line in html.splitlines():
     if "/event/" in line:
-        print(line[:300])
+        print(line[:500])
         break
