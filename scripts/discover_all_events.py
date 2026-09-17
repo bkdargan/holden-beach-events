@@ -41,4 +41,28 @@ for source in SOURCES:
         print("Status:", response.status_code)
         print("Length:", len(response.text))
 
-        soup = BeautifulSoup(
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        print("\nTITLE:")
+        print(soup.title.text if soup.title else "No title")
+
+        print("\nHEADINGS:")
+
+        count = 0
+
+        for heading in soup.find_all(["h1", "h2", "h3"]):
+
+            text = heading.get_text(" ", strip=True)
+
+            if text:
+
+                print(text)
+
+                count += 1
+
+                if count >= 15:
+                    break
+
+    except Exception as ex:
+
+        print("ERROR:", ex)
