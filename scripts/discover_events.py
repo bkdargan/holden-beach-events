@@ -13,13 +13,17 @@ print("Length:", len(response.text))
 
 soup = BeautifulSoup(response.text, "html.parser")
 
-print("\nTITLE:")
-print(soup.title.text)
+print("\nTABLES FOUND:", len(soup.find_all("table")))
 
 print("\nHEADINGS:")
 
-for heading in soup.find_all(["h1", "h2", "h3"])[:20]:
+for heading in soup.find_all(["h1", "h2", "h3"]):
     text = heading.get_text(strip=True)
 
     if text:
         print(text)
+
+print("\nFIRST 20 ROWS:\n")
+
+for row in soup.find_all("tr")[:20]:
+    print(row.get_text(" | ", strip=True))
