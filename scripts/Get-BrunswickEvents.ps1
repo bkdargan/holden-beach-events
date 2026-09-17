@@ -9,7 +9,6 @@ $urls = @(
 foreach ($url in $urls)
 {
     $response = Invoke-WebRequest -Uri $url
-
     $content = $response.Content
 
     $titleLine = ($content -split "`n") |
@@ -20,8 +19,16 @@ foreach ($url in $urls)
         -replace "<title>", "" `
         -replace "</title>", ""
 
+    $descLine = ($content -split "`n") |
+        Where-Object { $_ -match 'meta name="description"' } |
+        Select-Object -First 1
+
     Write-Host ""
     Write-Host "======================="
     Write-Host "TITLE: $title"
+    Write-Host ""
+    Write-Host "DESCRIPTION:"
+    Write-Host $descLine
+    Write-Host ""
     Write-Host "URL: $url"
 }
