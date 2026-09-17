@@ -13,3 +13,9 @@ jobs:
       - name: Run Brunswick Import Test
         shell: pwsh
         run: ./scripts/Get-BrunswickEvents.ps1
+
+      - name: Upload Event Page
+        uses: actions/upload-artifact@v4
+        with:
+          name: event-page
+          path: event-page.html
