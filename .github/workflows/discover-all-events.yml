@@ -1,42 +1,14 @@
-name: Discover All Events
-
-on:
-  workflow_dispatch:
-
-jobs:
-  discover:
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install Libraries
+      - name: Show Coastal Events JSON
         run: |
-          pip install requests beautifulsoup4
+          cat coastal_events.json
 
-      - name: Discover Events
-        run: |
-          python scripts/discover_all_events.py
-
-      - name: Show Hobbs Events JSON
-        run: |
-          cat hobbs_events.json
-
-      - name: Commit Hobbs Events
+      - name: Commit Coastal Events
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add hobbs_events.json
+          git add coastal_events.json
 
-          git diff --staged --quiet || git commit -m "Update hobbs events"
+          git diff --staged --quiet || git commit -m "Update coastal events"
 
           git push
