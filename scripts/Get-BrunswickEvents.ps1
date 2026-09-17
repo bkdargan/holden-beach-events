@@ -17,7 +17,7 @@ $patterns = @(
 
 foreach ($pattern in $patterns) {
 
-    if ($content -match :Escape($pattern)) {
+    if ($content.Contains($pattern)) {
         Write-Host "FOUND: $pattern"
     }
     else {
