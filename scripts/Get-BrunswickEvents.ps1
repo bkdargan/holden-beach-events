@@ -2,10 +2,10 @@ Write-Host "Creating Event JSON"
 
 $events = @()
 
-# Download Brunswick County event page
+# Download Brunswick events page
 $listingPage = Invoke-WebRequest -Uri "https://www.ncbrunswick.com/events/"
 
-# Extract event URLs
+# Find all event URLs
 $urlPattern = 'https://www\.ncbrunswick\.com/event/[^"]+'
 
 $urls = :Matches($listingPage.Content, $urlPattern) |
