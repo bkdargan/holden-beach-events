@@ -1,43 +1,44 @@
 import requests
 from bs4 import BeautifulSoup
 
-sites = [
-    "https://www.hobbsrealty.com/holden-beach-events",
-    "https://www.coastalvacationresorts.com/holden-beach-events"
-]
+url = "https://www.hobbsrealty.com/events/festivals/north-carolina-oyster-festival"
 
-for site in sites:
+response = requests.get(
+    url,
+    headers={"User-Agent": "Mozilla/5.0"},
+    timeout=30
+)
 
-    print("\n" + "=" * 80)
-    print(site)
+print("Status:", response.status_code)
+print("Length:", len(response.text))
 
-    response = requests.get(
-        site,
-        headers={"User-Agent": "Mozilla/5.0"}
-    )
+soup = BeautifulSoup(response.text, "html.parser")
 
-    soup = BeautifulSoup(response.text, "html.parser")
+print("\nTITLE:\n")
+print(soup.title.text)
 
-    print("\nLINKS:\n")
+print("\nHEADINGS:\n")
 
-    count = 0
+for heading in soup.find_all(["h1", "h2", "h3"]):
+    text = heading.get_text(" ", strip=True)
 
-    for link in soup.find_all("a", href=True):
+    if text:
+        print(text)
 
-        text = link.get_text(" ", strip=True)
+print("\nFIRST PARAGRAPHS:\n")
 
-        if (
-            "festival" in text.lower()
-            or "market" in text.lower()
-            or "yoga" in text.lower()
-            or "tournament" in text.lower()
-            or "tour" in text.lower()
-        ):
-            print(text)
-            print(link["href"])
-            print()
+count = 0
 
-            count += 1
+for p in soup.find_all("p"):
 
-            if count >= 20:
-                break
+    text = p.get_text(" ", strip=True)
+
+    if len(text) > 40:
+
+        print(text)
+        print()
+
+        count += 1
+
+        if count >= 10:
+            break
