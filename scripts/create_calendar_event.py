@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from datetime import datetime, timedelta
 
 from google.oauth2 import service_account
@@ -7,11 +8,7 @@ from googleapiclient.discovery import build
 
 
 def normalize(text):
-    return (
-        text.lower()
-        .replace("&", "and")
-        .strip()
-    )
+    return text.lower().replace(strip()
 
 
 def clean_url(url):
@@ -19,18 +16,15 @@ def clean_url(url):
     if not url:
         return ""
 
-    if "https://" not in url:
-        return ""
+    match = re.search(
+        r"https://[^\"<>,\s]+",
+        url
+    )
 
-    start = url.find("https://")
+    if match:
+        return match.group(0)
 
-    url = url[start:]
-
-    for stop_char in ['"', "<", ">", ","]:
-        if stop_char in url:
-            url = url.split(stop_char)[0]
-
-    return url.strip()
+    return ""
 
 
 def add_emoji(title):
@@ -89,13 +83,10 @@ with open(
     "normalized_events.json",
     "r"
 ) as f:
-
     events = json.load(f)
 
 print()
-print(
-    f"Found {len(events)} normalized events"
-)
+print(f"Found {len(events)} normalized events")
 print()
 
 created = 0
@@ -122,30 +113,21 @@ for item in events:
         []
     ):
 
-        existing_title = existing.get(
-            "summary",
-            ""
-        )
-
-        for emoji in [
-            "🎵 ",
-            "🎉 ",
-            "🍺 ",
-            "🎣 ",
-            "🛍️ ",
-            "🧘 ",
-            "🏝️ "
-        ]:
-            existing_title = existing_title.replace(
-                emoji,
+        existing_title = (
+            existing.get(
+                "summary",
                 ""
             )
+            .replace("🎵 ", "")
+            .replace("🎉 ", "")
+            .replace("🍺 ", "")
+            .replace("🎣 ", "")
+            .replace("🛍️ ", "")
+            .replace("🧘 ", "")
+            .replace("🏝️ ", "")
+        )
 
-        if (
-            normalize(existing_title)
-            ==
-            normalize(title)
-        ):
+        if normalize(existing_title) == normalize(title):
             duplicate_found = True
             break
 
@@ -153,9 +135,7 @@ for item in events:
 
         skipped += 1
 
-        print(
-            f"SKIPPED: {title}"
-        )
+        print(f"SKIPPED: {title}")
 
         continue
 
@@ -189,13 +169,11 @@ for item in events:
     full_description = description
 
     if source_name:
-
         full_description += (
             f"\n\nSource: {source_name}"
         )
 
     if url:
-
         full_description += (
             f"\n\nMore Information:\n{url}"
         )
@@ -210,84 +188,68 @@ for item in events:
     )
 
     #
-    # Timed recurring activities
+    # Timed events
     #
 
     if event_time:
 
-        start_dt = (
-            f"{item['start_date']}"
-            f"T{event_time}:00-04:00"
+        start_dt = datetime.strptime(
+            f"{item['start_date']} {event_time}",
+            "%Y-%m-%d %H:%M"
         )
 
+        end_dt = start_dt + timedelta(hours=1)
+
         event = {
-            "summary":
-                add_emoji(title),
-            "location":
-                item.get(
-                    "location",
-                    ""
-                ),
-            "description":
-                full_description,
-           "start": {
-                "dateTime":
-                    start_dt
+            "summary": add_emoji(title),
+            "location": item.get(
+                "location",
+                ""
+            ),
+            "description": full_description,
+            "start": {
+                "dateTime": start_dt.isoformat(),
+                "timeZone": "America/New_York"
             },
             "end": {
-                "dateTime":
-                    (
-                        datetime.strptime(
-                            start_dt,
-                            "%Y-%m-%dT%H:%M:%S-04:00"
-                        )
-                        + timedelta(hours=1)
-                    ).strftime(
-                        "%Y-%m-%dT%H:%M:%S-04:00"
-                    )
+                "dateTime": end_dt.isoformat(),
+                "timeZone": "America/New_York"
             }
         }
 
     #
-    # All-day events
+    # All day events
     #
 
     else:
 
         event = {
-            "summary":
-                add_emoji(title),
-            "location":
-                item.get(
-                    "location",
-                    ""
-                ),
-            "description":
-                full_description,
+            "summary": add_emoji(title),
+            "location": item.get(
+                "location",
+                ""
+            ),
+            "description": full_description,
             "start": {
-                "date":
-                    start_date.strftime(
-                        "%Y-%m-%d"
-                    )
+                "date": start_date.strftime(
+                    "%Y-%m-%d"
+                )
             },
             "end": {
-                "date":
-                    (
-                        end_date +
-                        timedelta(days=1)
-                    ).strftime(
-                        "%Y-%m-%d"
-                    )
+                "date": (
+                    end_date +
+                    timedelta(days=1)
+                ).strftime(
+                    "%Y-%m-%d"
+                )
             }
         }
 
     if url:
 
         event["source"] = {
-            "title":
-                "Official Event Website",
-            "url":
-                url
+            "title": "Official Event Website",
+            "url": url
         }
 
     service.events().insert(
@@ -297,15 +259,9 @@ for item in events:
 
     created += 1
 
-    print(
-        f"CREATED: {title}"
-    )
+    print(f"CREATED: {title}")
 
 print()
-print(
-    f"Created: {created}"
-)
-print(
-    f"Skipped: {skipped}"
-)
+print(f"Created: {created}")
+print(f"Skipped: {skipped}")
 print()
