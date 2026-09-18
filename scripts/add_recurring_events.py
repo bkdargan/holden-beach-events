@@ -4,10 +4,7 @@ from datetime import datetime, timedelta
 with open("normalized_events.json", "r") as f:
     events = json.load(f)
 
-#
 # Yoga at Bridgeview Park
-#
-
 start = datetime(2026, 1, 1)
 end = datetime(2026, 12, 31)
 
@@ -15,8 +12,7 @@ current = start
 
 while current <= end:
 
-    if current.weekday() in [0, 2, 4\]:
-
+    if current.weekday() in [0, 2, 4]:
         events.append(
             {
                 "title": "Yoga at Bridgeview Park",
@@ -34,10 +30,7 @@ while current <= end:
 
     current += timedelta(days=1)
 
-#
 # Sunset Beach Market
-#
-
 start = datetime(2026, 4, 30)
 end = datetime(2026, 9, 24)
 
@@ -46,7 +39,6 @@ current = start
 while current <= end:
 
     if current.weekday() == 3:
-
         events.append(
             {
                 "title": "Sunset Beach Market at the Park",
@@ -64,10 +56,7 @@ while current <= end:
 
     current += timedelta(days=1)
 
-#
 # Bald Head Island Guided Historic Tours
-#
-
 start = datetime(2026, 3, 1)
 end = datetime(2026, 12, 31)
 
@@ -76,7 +65,6 @@ current = start
 while current <= end:
 
     if current.weekday() in [1, 4, 5\]:
-
         events.append(
             {
                 "title": "Bald Head Island Guided Historic Tours",
@@ -94,10 +82,6 @@ while current <= end:
     current += timedelta(days=1)
 
 with open("normalized_events.json", "w") as f:
-    json.dump(
-        events,
-        f,
-        indent=2
-    )
+    json.dump(events, f, indent=2)
 
-print(f"Final event count: {len(events)}
+print(f"Final event count: {len(events)}")
