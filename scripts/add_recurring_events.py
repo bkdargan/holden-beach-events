@@ -9,16 +9,11 @@ with open(
     events = json.load(f)
 
 #
-# Yoga
+# Yoga at Bridgeview Park
 #
 
-start = datetime(
-    2026, 1, 1
-)
-
-end = datetime(
-    2026, 12, 31
-)
+start = datetime(2026, 1, 1)
+end = datetime(2026, 12, 31)
 
 current = start
 
@@ -28,42 +23,31 @@ while current <= end:
 
         events.append(
             {
-                "title":
-                    "Yoga at Bridgeview Park",
-                "location":
-                    "Bridgeview Park, Holden Beach NC",
-                "description":
-                    "Beginner friendly yoga class. Mondays, Wednesdays and Fridays at 9:00 AM.",
-                "url":
-                    "",
-                "source":
-                    "hobbs-recurring",
-                "start_date":
-                    current.strftime(
-                        "%Y-%m-%d"
-                    ),
-                "end_date":
-                    current.strftime(
-                        "%Y-%m-%d"
-                    )
+                "title": "Yoga at Bridgeview Park",
+                "location": "Bridgeview Park, Holden Beach NC",
+                "description": (
+                    "Beginner friendly yoga class. "
+                    "Mondays, Wednesdays and Fridays at 9:00 AM."
+                ),
+                "url": "",
+                "source": "hobbs-recurring",
+                "start_date": current.strftime(
+                    "%Y-%m-%d"
+                ),
+                "end_date": current.strftime(
+                    "%Y-%m-%d"
+                )
             }
         )
 
-    current += timedelta(
-        days=1
-    )
+    current += timedelta(days=1)
 
 #
 # Sunset Beach Market
 #
 
-start = datetime(
-    2026, 4, 30
-)
-
-end = datetime(
-    2026, 9, 24
-)
+start = datetime(2026, 4, 30)
+end = datetime(2026, 9, 24)
 
 current = start
 
@@ -73,42 +57,31 @@ while current <= end:
 
         events.append(
             {
-                "title":
-                    "Sunset Beach Market at the Park",
-                "location":
-                    "Sunset Beach Town Park",
-                "description":
-                    "Weekly summer market. Thursdays 9:00 AM - 1:00 PM.",
-                "url":
-                    "",
-                "source":
-                    "hobbs-recurring",
-                "start_date":
-                    current.strftime(
-                        "%Y-%m-%d"
-                    ),
-                "end_date":
-                    current.strftime(
-                        "%Y-%m-%d"
-                    )
+                "title": "Sunset Beach Market at the Park",
+                "location": "Sunset Beach Town Park",
+                "description": (
+                    "Weekly summer market. "
+                    "Thursdays 9:00 AM - 1:00 PM."
+                ),
+                "url": "",
+                "source": "hobbs-recurring",
+                "start_date": current.strftime(
+                    "%Y-%m-%d"
+                ),
+                "end_date": current.strftime(
+                    "%Y-%m-%d"
+                )
             }
         )
 
-    current += timedelta(
-        days=1
-    )
+    current += timedelta(days=1)
 
 #
-# Bald Head Tours
+# Bald Head Island Guided Historic Tours
 #
 
-start = datetime(
-    2026, 3, 1
-)
-
-end = datetime(
-    2026, 12, 31
-)
+start = datetime(2026, 3, 1)
+end = datetime(2026, 12, 31)
 
 current = start
 
@@ -118,30 +91,23 @@ while current <= end:
 
         events.append(
             {
-                "title":
-                    "Bald Head Island Guided Historic Tours",
-                "location":
-                    "Bald Head Island",
-                "description":
-                    "Guided historic golf cart tour.",
-                "url":
-                    "",
-                "source":
-                    "coastal-recurring",
-                "start_date":
-                    current.strftime(
-                        "%Y-%m-%d"
-                    ),
-                "end_date":
-                    current.strftime(
-                        "%Y-%m-%d"
-                    )
+                "title": "Bald Head Island Guided Historic Tours",
+                "location": "Bald Head Island",
+                "description": (
+                    "Guided historic golf cart tour."
+                ),
+                "url": "",
+                "source": "coastal-recurring",
+                "start_date": current.strftime(
+                    "%Y-%m-%d"
+                ),
+                "end_date": current.strftime(
+                    "%Y-%m-%d"
+                )
             }
         )
 
-    current += timedelta(
-        days=1
-    )
+    current += timedelta(days=1)
 
 with open(
     "normalized_events.json",
