@@ -1,1 +1,154 @@
-[]
+[
+  {
+    "title": "Holden Beach Concert - Special Occasion Band",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-05-24",
+    "end_date": "2026-05-24"
+  },
+  {
+    "title": "Holden Beach Concert - Gary Lowder",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-05-31",
+    "end_date": "2026-05-31"
+  },
+  {
+    "title": "Holden Beach Concert - Jim Quick and Coastline",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-06-07",
+    "end_date": "2026-06-07"
+  },
+  {
+    "title": "Holden Beach Concert - The Embers ft. Craig Woolard",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-06-14",
+    "end_date": "2026-06-14"
+  },
+  {
+    "title": "Holden Beach Concert - Carolina Kool",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-06-21",
+    "end_date": "2026-06-21"
+  },
+  {
+    "title": "Holden Beach Concert - The Extraordinaires",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-06-28",
+    "end_date": "2026-06-28"
+  },
+  {
+    "title": "Holden Beach Concert - The Tams",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-07-05",
+    "end_date": "2026-07-05"
+  },
+  {
+    "title": "Holden Beach Concert - Band of Oz",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-07-12",
+    "end_date": "2026-07-12"
+  },
+  {
+    "title": "Holden Beach Concert - Too Much Sylvia",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-07-19",
+    "end_date": "2026-07-19"
+  },
+  {
+    "title": "Holden Beach Concert - Blackwater Band",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-07-26",
+    "end_date": "2026-07-26"
+  },
+  {
+    "title": "Holden Beach Concert - The Sand Band",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-08-02",
+    "end_date": "2026-08-02"
+  },
+  {
+    "title": "Holden Beach Concert - North Tower",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-08-09",
+    "end_date": "2026-08-09"
+  },
+  {
+    "title": "Holden Beach Concert - Continental Divide",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-08-16",
+    "end_date": "2026-08-16"
+  },
+  {
+    "title": "Holden Beach Concert - I-42",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-08-23",
+    "end_date": "2026-08-23"
+  },
+  {
+    "title": "Holden Beach Concert - The Main Event",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-08-30",
+    "end_date": "2026-08-30"
+  },
+  {
+    "title": "Holden Beach Concert - Chairman of the Board",
+    "location": "Bridgeview Park, Holden Beach NC",
+    "description": "",
+    "source": "concerts",
+    "start_date": "2026-09-06",
+    "end_date": "2026-09-06"
+  },
+  {
+    "title": "North Carolina Oyster Festival",
+    "location": "1 East 2nd St.,\u00a0Ocean Isle Beach, NC 28469",
+    "description": "Check out the popular annual North Carolina Oyster Festival at neighboring Ocean Isle Beach, which dates back to 1978! Enjoy a variety of foods, crafts, contests, and musical performances at the Ocean Isle Beach Town Center Park. The Festival\u2019s signature Oyster Shucking Contest is always held on Saturday. Bring a chair to sit back and enjoy live music featuring a variety of genres. Dancing is encouraged!",
+    "source": "hobbs",
+    "start_date": "2026-10-17",
+    "end_date": "2026-10-18"
+  },
+  {
+    "title": "Lighthouse Beer & Wine Festival",
+    "location": "220 Causeway Drive,\u00a0Wrightsville Beach, NC",
+    "description": "Come together to celebrate some of our favorite beverages: beer & wine!",
+    "source": "coastal",
+    "start_date": "2026-10-18",
+    "end_date": "2026-10-18"
+  },
+  {
+    "title": "Festival by the Sea at Holden Beach",
+    "location": "When: October 24th - October 25th, 2026  0 Jordan Blvd\u00a0, Holden Beach,\u00a0NC Website",
+    "description": "Join us for the Festival by the Sea, Holden Beach's annual arts & crafts extravaganza! Enjoy a parade, fishing tournament, live music, street dance, horseshoe tournament, sandcastle building contest, and so much more. Plus, it's the only time of the year you can walk across the beautiful Holden Beach bridge!",
+    "source": "coastal",
+    "start_date": "2026-10-24",
+    "end_date": "2026-10-25"
+  }
+]
