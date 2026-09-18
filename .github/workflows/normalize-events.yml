@@ -13,18 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: List Files
-        run: |
-          pwd
-          ls -la
-
-      - name: Show All Events Before Normalizing
-        run: |
-          cat all_events.json
-
       - name: Run Normalizer
         run: |
           python scripts/normalize_events.py
+
+      - name: Add Recurring Events
+        run: |
+          python scripts/add_recurring_events.py
 
       - name: Show Normalized Events
         run: |
