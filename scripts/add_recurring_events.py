@@ -4,15 +4,20 @@ from datetime import datetime, timedelta
 with open("normalized_events.json", "r") as f:
     events = json.load(f)
 
+today = datetime.now()
+
+end_date = today + timedelta(days=90)
+
+#
 # Yoga at Bridgeview Park
-start = datetime(2026, 1, 1)
-end = datetime(2026, 12, 31)
+#
 
-current = start
+current = today
 
-while current <= end:
+while current <= end_date:
 
     if current.weekday() in [0, 2, 4]:
+
         events.append(
             {
                 "title": "Yoga at Bridgeview Park",
@@ -23,6 +28,7 @@ while current <= end:
                 ),
                 "url": "",
                 "source": "hobbs-recurring",
+                "event_time": "09:00",
                 "start_date": current.strftime("%Y-%m-%d"),
                 "end_date": current.strftime("%Y-%m-%d")
             }
@@ -30,15 +36,16 @@ while current <= end:
 
     current += timedelta(days=1)
 
+#
 # Sunset Beach Market
-start = datetime(2026, 4, 30)
-end = datetime(2026, 9, 24)
+#
 
-current = start
+current = today
 
-while current <= end:
+while current <= end_date:
 
     if current.weekday() == 3:
+
         events.append(
             {
                 "title": "Sunset Beach Market at the Park",
@@ -49,6 +56,7 @@ while current <= end:
                 ),
                 "url": "",
                 "source": "hobbs-recurring",
+                "event_time": "09:00",
                 "start_date": current.strftime("%Y-%m-%d"),
                 "end_date": current.strftime("%Y-%m-%d")
             }
@@ -56,15 +64,16 @@ while current <= end:
 
     current += timedelta(days=1)
 
+#
 # Bald Head Island Guided Historic Tours
-start = datetime(2026, 3, 1)
-end = datetime(2026, 12, 31)
+#
 
-current = start
+current = today
 
-while current <= end:
+while current <= end_date:
 
     if current.weekday() in [1, 4, 5]:
+
         events.append(
             {
                 "title": "Bald Head Island Guided Historic Tours",
@@ -74,6 +83,7 @@ while current <= end:
                 ),
                 "url": "",
                 "source": "coastal-recurring",
+                "event_time": "10:00",
                 "start_date": current.strftime("%Y-%m-%d"),
                 "end_date": current.strftime("%Y-%m-%d")
             }
