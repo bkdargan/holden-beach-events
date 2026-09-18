@@ -39,19 +39,17 @@ def clean_location(location):
         flags=re.IGNORECASE
     )
 
-    location = location.strip()
-
-    return location
+    return location.strip()
 
 
-def extract_url(url):
+def extract_url(url_text):
 
-    if not url:
+    if not url_text:
         return ""
 
     match = re.search(
-        r'https://[^"\s<]+',
-        url
+        r"https://[^\s\"<>]+",
+        url_text
     )
 
     if match:
@@ -61,8 +59,6 @@ def extract_url(url):
 
 
 def extract_dates(event):
-
-    # Concert schedule
 
     if (
         "month" in event
@@ -76,25 +72,16 @@ def extract_dates(event):
 
         if month:
 
-            day = int(
-                event["day"]
-            )
-
             return {
-                "start_date": (
-                    f"2026-{month}-{day:02d}"
-                ),
-                "end_date": (
-                    f"2026-{month}-{day:02d}"
-                )
+                "start_date":
+                    f"2026-{month}-{int(event['day']):02d}",
+                "end_date":
+                    f"2026-{month}-{int(event['day']):02d}"
             }
 
-    date_text = (
-        event.get(
-            "date_time",
-            ""
-        )
-        .strip()
+    title = event.get(
+        "title",
+        ""
     )
 
     description = event.get(
@@ -102,28 +89,10 @@ def extract_dates(event):
         ""
     )
 
-    title = event.get(
-        "title",
+    date_text = event.get(
+        "date_time",
         ""
     )
-
-    # Festival by Sea in description only
-
-    if (
-        "October 24-25, 2026"
-        in description
-    ):
-
-        return {
-            "start_date": (
-                "2026-10-24"
-            ),
-            "end_date": (
-                "2026-10-25"
-            )
-        }
-
-    # King Mackerel date hidden in description
 
     if (
         title ==
@@ -137,10 +106,20 @@ def extract_dates(event):
                 "2026-10-03"
         }
 
+    if (
+        "October 24-25, 2026"
+        in description
+    ):
+
+        return {
+            "start_date":
+                "2026-10-24",
+            "end_date":
+                "2026-10-25"
+        }
+
     if not date_text:
         return None
-
-    # Oct 24-25 style
 
     m = re.search(
         r"([A-Za-z]+)\s+(\d+)"
@@ -179,8 +158,6 @@ def extract_dates(event):
                 f"{m.group(5)}-{end_month:02d}-{int(m.group(4)):02d}"
         }
 
-    # Oct 1st-3rd
-
     m = re.search(
         r"October\s+(\d+)"
         r"(?:st|nd|rd|th)?"
@@ -199,8 +176,6 @@ def extract_dates(event):
             "end_date":
                 f"{m.group(3)}-10-{int(m.group(2)):02d}"
         }
-
-    # Oyster Festival
 
     if (
         "October" in date_text
@@ -221,8 +196,6 @@ def extract_dates(event):
                 "end_date":
                     f"2026-10-{int(numbers[1]):02d}"
             }
-
-    # Single-day October event
 
     m = re.search(
         r"October\s+(\d+)",
@@ -255,7 +228,6 @@ with open(
 
 normalized = []
 skipped = []
-
 seen = set()
 
 for event in all_events:
@@ -313,4 +285,29 @@ for event in all_events:
             "end_date":
                 dates["end_date"]
         }
+    )
+
+with open(
+    OUTPUT_FILE,
+    "w"
+) as f:
+
+    json.dump(
+        normalized,
+        f,
+        indent=2
+    )
+
+print()
+print(
+    f"Normalized events: {len(normalized)}"
+)
+print(
+    f"Skipped events: {len(skipped)}"
+)
+print()
+
+for event in skipped:
+    print(
+        f"SKIPPED: {event}"
     )
