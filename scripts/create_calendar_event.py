@@ -26,7 +26,7 @@ def clean_url(url):
 
     url = url[start:]
 
-    for stop_char in ['"', "<", ">", ","\]:
+    for stop_char in ['"', "<", ">", ","]:
         if stop_char in url:
             url = url.split(stop_char)[0]
 
