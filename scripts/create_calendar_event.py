@@ -135,7 +135,7 @@ for item in events:
             "🛍️ ",
             "🧘 ",
             "🏝️ "
-        \]:
+        ]:
             existing_title = existing_title.replace(
                 emoji,
                 ""
