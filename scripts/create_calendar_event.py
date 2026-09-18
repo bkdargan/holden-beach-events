@@ -151,9 +151,14 @@ for item in events:
             f"\n\nMore Information:\n{url}"
         )
 
-    full_description += (
-        f"\n\nEVENT_ID:{normalize(title)}"
-    )
+  event_key = (
+    f"{normalize(title)}|"
+    f"{item['start_date']}"
+)
+
+full_description += (
+    f"\n\nEVENT_KEY:{event_key}"
+)
 
     event_time = item.get(
         "event_time",
