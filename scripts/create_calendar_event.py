@@ -1,8 +1,10 @@
 import json
 import os
+from datetime import datetime, timedelta
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+
 
 def normalize(text):
     return (
@@ -11,72 +13,124 @@ def normalize(text):
         .strip()
     )
 
-credentials_json = json.loads(os.environ["GOOGLE_CREDENTIALS"])
-calendar_id = os.environ["GOOGLE_CALENDAR_ID"]
 
-credentials = service_account.Credentials.from_service_account_info(
-    credentials_json,
-    scopes=["https://www.googleapis.com/auth/calendar"]
+credentials_json = json.loads(
+    os.environ["GOOGLE_CREDENTIALS"]
 )
 
-service = build("calendar", "v3", credentials=credentials)
+calendar_id = os.environ[
+    "GOOGLE_CALENDAR_ID"
+]
 
-MONTHS = {
-    "May": "05",
-    "June": "06",
-    "July": "07",
-    "August": "08",
-    "September": "09"
-}
+credentials = (
+    service_account.Credentials
+    .from_service_account_info(
+        credentials_json,
+        scopes=[
+            "https://www.googleapis.com/auth/calendar"
+        ]
+    )
+)
 
-with open("concerts.json", "r") as f:
-    concerts = json.load(f)
+service = build(
+    "calendar",
+    "v3",
+    credentials=credentials
+)
 
-for concert in concerts:
+with open(
+    "normalized_events.json",
+    "r"
+) as f:
 
-    title = concert["title"]
+    events = json.load(f)
 
-    month = MONTHS[concert["month"]]
-    day = concert["day"].zfill(2)
+print()
+print(
+    f"Found {len(events)} normalized events"
+)
+print()
 
-    start_date = f"2026-{month}-{day}"
+created = 0
+skipped = 0
 
-    # Search calendar for matching events
-    existing_events = service.events().list(
-        calendarId=calendar_id,
-        q=title,
-        singleEvents=True
-    ).execute()
+for item in events:
+
+    title = item["title"]
+
+    existing_events = (
+        service.events()
+        .list(
+            calendarId=calendar_id,
+            q=title,
+            singleEvents=True
+        )
+        .execute()
+    )
 
     duplicate_found = False
 
-    for existing in existing_events.get("items", []):
+    for existing in existing_events.get(
+        "items",
+        []
+    ):
 
         existing_title = existing.get(
             "summary",
             ""
         )
 
-        if normalize(existing_title) == normalize(title):
+        if (
+            normalize(existing_title)
+            ==
+            normalize(title)
+        ):
             duplicate_found = True
             break
 
     if duplicate_found:
-        print(f"SKIPPED (already exists): {title}")
+
+        skipped += 1
+
+        print(
+            f"SKIPPED: {title}"
+        )
+
         continue
+
+    start_date = datetime.strptime(
+        item["start_date"],
+        "%Y-%m-%d"
+    )
+
+    end_date = datetime.strptime(
+        item["end_date"],
+        "%Y-%m-%d"
+    )
 
     event = {
         "summary": title,
-        "location": concert["location"],
+        "location": item.get(
+            "location",
+            ""
+        ),
         "description": (
-            "Imported automatically from Holden Beach Concert Schedule\n"
+            f"{item.get('description', '')}\n\n"
+            f"Source: {item.get('source', '')}\n"
             f"EVENT_ID:{normalize(title)}"
         ),
         "start": {
-            "dateTime": f"{start_date}T18:30:00-04:00"
+            "date": start_date.strftime(
+                "%Y-%m-%d"
+            )
         },
         "end": {
-            "dateTime": f"{start_date}T20:00:00-04:00"
+            "date": (
+                end_date +
+                timedelta(days=1)
+            ).strftime(
+                "%Y-%m-%d"
+            )
         }
     }
 
@@ -85,4 +139,17 @@ for concert in concerts:
         body=event
     ).execute()
 
-    print(f"CREATED: {title}")
+    created += 1
+
+    print(
+        f"CREATED: {title}"
+    )
+
+print()
+print(
+    f"Created: {created}"
+)
+print(
+    f"Skipped: {skipped}"
+)
+print()
