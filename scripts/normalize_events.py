@@ -260,4 +260,57 @@ seen = set()
 
 for event in all_events:
 
-    dates = extract
+    dates = extract_dates(event)
+
+    if not dates:
+
+        skipped.append(
+            event["title"]
+        )
+
+        continue
+
+    key = (
+        event["title"]
+        .lower()
+        .strip()
+    )
+
+    if key in seen:
+        continue
+
+    seen.add(key)
+
+    normalized.append(
+        {
+            "title": event["title"],
+            "location":
+                clean_location(
+                    event.get(
+                        "location",
+                        ""
+                    )
+                ),
+            "description":
+                event.get(
+                    "description",
+                    ""
+                ),
+            "url":
+                extract_url(
+                    event.get(
+                        "url",
+                        ""
+                    )
+                ),
+            "source":
+                event.get(
+                    "source",
+                    ""
+                ),
+            "start_date":
+                dates["start_date"],
+            "end_date":
+                dates["end_date"]
+        }
+    )
