@@ -26,7 +26,7 @@ while current <= end:
                 "title": "Yoga at Bridgeview Park",
                 "location": "Bridgeview Park, Holden Beach NC",
                 "description": (
-                    "Beginner friendly yoga class. "
+                    "Beginner friendly yoga class taught by Alice Ledford. "
                     "Mondays, Wednesdays and Fridays at 9:00 AM."
                 ),
                 "url": "",
@@ -60,8 +60,7 @@ while current <= end:
                 "title": "Sunset Beach Market at the Park",
                 "location": "Sunset Beach Town Park",
                 "description": (
-                    "Weekly summer market. "
-                    "Thursdays 9:00 AM - 1:00 PM."
+                    "Weekly summer market. Thursdays 9:00 AM - 1:00 PM."
                 ),
                 "url": "",
                 "source": "hobbs-recurring",
