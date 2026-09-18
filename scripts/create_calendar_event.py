@@ -111,42 +111,7 @@ for item in events:
 
     duplicate_found = False
 
-    for existing in existing_events.get(
-        "items",
-        []
-    ):
-
-        existing_title = existing.get(
-            "summary",
-            ""
-        )
-
-        for emoji in [
-            "🎵 ",
-            "🎉 ",
-            "🍺 ",
-            "🎣 ",
-            "🛍️ ",
-            "🧘 ",
-            "🏝️ "
-        ]:
-            existing_title = existing_title.replace(
-                emoji,
-                ""
-            )
-
-        if normalize(existing_title) == normalize(title):
-            duplicate_found = True
-            break
-
-    if duplicate_found:
-
-        skipped += 1
-
-        print(f"SKIPPED: {title}")
-
-        continue
-
+   
     start_date = datetime.strptime(
         item["start_date"],
         "%Y-%m-%d"
