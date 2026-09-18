@@ -14,6 +14,25 @@ def normalize(text):
     )
 
 
+def clean_url(url):
+
+    if not url:
+        return ""
+
+    if "https://" not in url:
+        return ""
+
+    start = url.find("https://")
+
+    url = url[start:]
+
+    for stop_char in ['"', "<", ">", ","\]:
+        if stop_char in url:
+            url = url.split(stop_char)[0]
+
+    return url.strip()
+
+
 def add_emoji(title):
 
     lower = title.lower()
@@ -35,6 +54,9 @@ def add_emoji(title):
 
     if "yoga" in lower:
         return f"🧘 {title}"
+
+    if "tour" in lower:
+        return f"🏝️ {title}"
 
     return title
 
@@ -105,15 +127,19 @@ for item in events:
             ""
         )
 
-        existing_title = (
-            existing_title
-            .replace("🎵 ", "")
-            .replace("🎉 ", "")
-            .replace("🍺 ", "")
-            .replace("🎣 ", "")
-            .replace("🛍️ ", "")
-            .replace("🧘 ", "")
-        )
+        for emoji in [
+            "🎵 ",
+            "🎉 ",
+            "🍺 ",
+            "🎣 ",
+            "🛍️ ",
+            "🧘 ",
+            "🏝️ "
+        \]:
+            existing_title = existing_title.replace(
+                emoji,
+                ""
+            )
 
         if (
             normalize(existing_title)
@@ -143,9 +169,11 @@ for item in events:
         "%Y-%m-%d"
     )
 
-    url = item.get(
-        "url",
-        ""
+    url = clean_url(
+        item.get(
+            "url",
+            ""
+        )
     )
 
     description = item.get(
@@ -176,33 +204,90 @@ for item in events:
         f"\n\nEVENT_ID:{normalize(title)}"
     )
 
-    event = {
-        "summary": add_emoji(title),
-        "location": item.get(
-            "location",
-            ""
-        ),
-        "description": full_description,
-        "start": {
-            "date": start_date.strftime(
-                "%Y-%m-%d"
-            )
-        },
-        "end": {
-            "date": (
-                end_date +
-                timedelta(days=1)
-            ).strftime(
-                "%Y-%m-%d"
-            )
+    event_time = item.get(
+        "event_time",
+        ""
+    )
+
+    #
+    # Timed recurring activities
+    #
+
+    if event_time:
+
+        start_dt = (
+            f"{item['start_date']}"
+            f"T{event_time}:00-04:00"
+        )
+
+        event = {
+            "summary":
+                add_emoji(title),
+            "location":
+                item.get(
+                    "location",
+                    ""
+                ),
+            "description":
+                full_description,
+           start": {
+                "dateTime":
+                    start_dt
+            },
+            "end": {
+                "dateTime":
+                    (
+                        datetime.strptime(
+                            start_dt,
+                            "%Y-%m-%dT%H:%M:%S-04:00"
+                        )
+                        + timedelta(hours=1)
+                    ).strftime(
+                        "%Y-%m-%dT%H:%M:%S-04:00"
+                    )
+            }
         }
-    }
+
+    #
+    # All-day events
+    #
+
+    else:
+
+        event = {
+            "summary":
+                add_emoji(title),
+            "location":
+                item.get(
+                    "location",
+                    ""
+                ),
+            "description":
+                full_description,
+            "start": {
+                "date":
+                    start_date.strftime(
+                        "%Y-%m-%d"
+                    )
+            },
+            "end": {
+                "date":
+                    (
+                        end_date +
+                        timedelta(days=1)
+                    ).strftime(
+                        "%Y-%m-%d"
+                    )
+            }
+        }
 
     if url:
 
         event["source"] = {
-            "title": "Event Website",
-            "url": url
+            "title":
+                "Official Event Website",
+            "url":
+                url
         }
 
     service.events().insert(
