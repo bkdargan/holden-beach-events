@@ -230,7 +230,7 @@ for item in events:
                 ),
             "description":
                 full_description,
-           start": {
+           "start": {
                 "dateTime":
                     start_dt
             },
