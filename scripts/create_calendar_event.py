@@ -98,6 +98,10 @@ skipped = 0
 for item in events:
 
     title = item["title"]
+    event_key = (
+    f"{normalize(title)}|"
+    f"{item['start_date']}"
+)
 
     existing_events = (
         service.events()
