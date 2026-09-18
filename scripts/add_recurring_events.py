@@ -64,7 +64,7 @@ current = start
 
 while current <= end:
 
-    if current.weekday() in [1, 4, 5\]:
+    if current.weekday() in [1, 4, 5]:
         events.append(
             {
                 "title": "Bald Head Island Guided Historic Tours",
