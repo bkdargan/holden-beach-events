@@ -156,14 +156,45 @@ for item in events:
     f"{item['start_date']}"
 )
 
-full_description += (
-    f"\n\nEVENT_KEY:{event_key}"
+duplicate_found = False
+
+existing_events = (
+    service.events()
+    .list(
+        calendarId=calendar_id,
+        q=title,
+        singleEvents=True
+    )
+    .execute()
 )
 
-    event_time = item.get(
-        "event_time",
+for existing in existing_events.get(
+    "items",
+    []
+):
+
+    description = existing.get(
+        "description",
         ""
     )
+
+    if (
+        f"EVENT_KEY:{event_key}"
+        in description
+    ):
+        duplicate_found = True
+        break
+
+if duplicate_found:
+
+    skipped += 1
+
+    print(
+        f"SKIPPED: {title} "
+        f"({item['start_date']})"
+    )
+
+    continue
 
     #
     # Timed Events
