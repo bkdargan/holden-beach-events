@@ -1,11 +1,7 @@
 import json
 from datetime import datetime, timedelta
 
-with open(
-    "normalized_events.json",
-    "r"
-) as f:
-
+with open("normalized_events.json", "r") as f:
     events = json.load(f)
 
 #
@@ -31,12 +27,8 @@ while current <= end:
                 ),
                 "url": "",
                 "source": "hobbs-recurring",
-                "start_date": current.strftime(
-                    "%Y-%m-%d"
-                ),
-                "end_date": current.strftime(
-                    "%Y-%m-%d"
-                )
+                "start_date": current.strftime("%Y-%m-%d"),
+                "end_date": current.strftime("%Y-%m-%d")
             }
         )
 
@@ -60,16 +52,13 @@ while current <= end:
                 "title": "Sunset Beach Market at the Park",
                 "location": "Sunset Beach Town Park",
                 "description": (
-                    "Weekly summer market. Thursdays 9:00 AM - 1:00 PM."
+                    "Weekly summer market. "
+                    "Thursdays 9:00 AM - 1:00 PM."
                 ),
                 "url": "",
                 "source": "hobbs-recurring",
-                "start_date": current.strftime(
-                    "%Y-%m-%d"
-                ),
-                "end_date": current.strftime(
-                    "%Y-%m-%d"
-                )
+                "start_date": current.strftime("%Y-%m-%d"),
+                "end_date": current.strftime("%Y-%m-%d")
             }
         )
 
@@ -97,28 +86,18 @@ while current <= end:
                 ),
                 "url": "",
                 "source": "coastal-recurring",
-                "start_date": current.strftime(
-                    "%Y-%m-%d"
-                ),
-                "end_date": current.strftime(
-                    "%Y-%m-%d"
-                )
+                "start_date": current.strftime("%Y-%m-%d"),
+                "end_date": current.strftime("%Y-%m-%d")
             }
         )
 
     current += timedelta(days=1)
 
-with open(
-    "normalized_events.json",
-    "w"
-) as f:
-
+with open("normalized_events.json", "w") as f:
     json.dump(
         events,
         f,
         indent=2
     )
 
-print(
-    f"Final event count: {len(events)}"
-)
+print(f"Final event count: {len(events)}
