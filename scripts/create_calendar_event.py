@@ -14,6 +14,31 @@ def normalize(text):
     )
 
 
+def add_emoji(title):
+
+    lower = title.lower()
+
+    if "concert" in lower:
+        return f"🎵 {title}"
+
+    if "festival" in lower:
+        return f"🎉 {title}"
+
+    if "wine" in lower or "beer" in lower:
+        return f"🍺 {title}"
+
+    if "mackerel" in lower:
+        return f"🎣 {title}"
+
+    if "market" in lower:
+        return f"🛍️ {title}"
+
+    if "yoga" in lower:
+        return f"🧘 {title}"
+
+    return title
+
+
 credentials_json = json.loads(
     os.environ["GOOGLE_CREDENTIALS"]
 )
@@ -80,6 +105,16 @@ for item in events:
             ""
         )
 
+        existing_title = (
+            existing_title
+            .replace("🎵 ", "")
+            .replace("🎉 ", "")
+            .replace("🍺 ", "")
+            .replace("🎣 ", "")
+            .replace("🛍️ ", "")
+            .replace("🧘 ", "")
+        )
+
         if (
             normalize(existing_title)
             ==
@@ -108,17 +143,46 @@ for item in events:
         "%Y-%m-%d"
     )
 
+    url = item.get(
+        "url",
+        ""
+    )
+
+    description = item.get(
+        "description",
+        ""
+    )
+
+    source_name = item.get(
+        "source",
+        ""
+    )
+
+    full_description = description
+
+    if source_name:
+
+        full_description += (
+            f"\n\nSource: {source_name}"
+        )
+
+    if url:
+
+        full_description += (
+            f"\n\nMore Information:\n{url}"
+        )
+
+    full_description += (
+        f"\n\nEVENT_ID:{normalize(title)}"
+    )
+
     event = {
-        "summary": title,
+        "summary": add_emoji(title),
         "location": item.get(
             "location",
             ""
         ),
-        "description": (
-            f"{item.get('description', '')}\n\n"
-            f"Source: {item.get('source', '')}\n"
-            f"EVENT_ID:{normalize(title)}"
-        ),
+        "description": full_description,
         "start": {
             "date": start_date.strftime(
                 "%Y-%m-%d"
@@ -133,6 +197,13 @@ for item in events:
             )
         }
     }
+
+    if url:
+
+        event["source"] = {
+            "title": "Event Website",
+            "url": url
+        }
 
     service.events().insert(
         calendarId=calendar_id,
