@@ -8,11 +8,14 @@ from googleapiclient.discovery import build
 
 
 def normalize(text):
-    return text.lower().replace(strip()
+    return (
+        text.lower()
+        .replace("&", "and")
+        .strip()
+    )
 
 
 def clean_url(url):
-
     if not url:
         return ""
 
@@ -113,19 +116,24 @@ for item in events:
         []
     ):
 
-        existing_title = (
-            existing.get(
-                "summary",
+        existing_title = existing.get(
+            "summary",
+            ""
+        )
+
+        for emoji in [
+            "🎵 ",
+            "🎉 ",
+            "🍺 ",
+            "🎣 ",
+            "🛍️ ",
+            "🧘 ",
+            "🏝️ "
+        \]:
+            existing_title = existing_title.replace(
+                emoji
                 ""
             )
-            .replace("🎵 ", "")
-            .replace("🎉 ", "")
-            .replace("🍺 ", "")
-            .replace("🎣 ", "")
-            .replace("🛍️ ", "")
-            .replace("🧘 ", "")
-            .replace("🏝️ ", "")
-        )
 
         if normalize(existing_title) == normalize(title):
             duplicate_found = True
@@ -156,13 +164,13 @@ for item in events:
         )
     )
 
-    description = item.get(
-        "description",
+    source_name = item.get(
+        "source",
         ""
     )
 
-    source_name = item.get(
-        "source",
+    description = item.get(
+        "description",
         ""
     )
 
@@ -188,9 +196,8 @@ for item in events:
     )
 
     #
-    # Timed events
+    # Timed Events
     #
-
     if event_time:
 
         start_dt = datetime.strptime(
@@ -218,9 +225,8 @@ for item in events:
         }
 
     #
-    # All day events
+    # All-Day Events
     #
-
     else:
 
         event = {
