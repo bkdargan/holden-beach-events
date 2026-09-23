@@ -5,6 +5,13 @@ from datetime import datetime, timedelta
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
+#
+# CALENDAR SETTINGS
+#
+IMPORT_WINDOW_DAYS = 30
+
+TIMEZONE = "America/New_York"
+
 
 def add_emoji(title):
 
@@ -27,6 +34,9 @@ def add_emoji(title):
 
     if "yoga" in lower:
         return f"🧘 {title}"
+
+    if "pickleball" in lower:
+        return f"🏓 {title}"
 
     if "tour" in lower:
         return f"🏝️ {title}"
@@ -69,12 +79,21 @@ print()
 print(
     f"Found {len(events)} normalized events"
 )
+
+print(
+    f"Import window: {IMPORT_WINDOW_DAYS} days"
+)
+
 print()
 
 created = 0
 
 today = datetime.now()
-window_end = today + timedelta(days=30)
+
+window_end = (
+    today +
+    timedelta(days=IMPORT_WINDOW_DAYS)
+)
 
 for item in events:
 
@@ -84,7 +103,7 @@ for item in events:
     )
 
     #
-    # ONLY INCLUDE EVENTS IN NEXT 30 DAYS
+    # ONLY INCLUDE EVENTS IN IMPORT WINDOW
     #
 
     if event_date < today:
@@ -163,11 +182,11 @@ for item in events:
             "description": full_description,
             "start": {
                 "dateTime": start_dt.isoformat(),
-                "timeZone": "America/New_York"
+                "timeZone": TIMEZONE
             },
             "end": {
                 "dateTime": end_dt.isoformat(),
-                "timeZone": "America/New_York"
+                "timeZone": TIMEZONE
             }
         }
 
