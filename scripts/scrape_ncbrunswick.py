@@ -4,8 +4,18 @@ from bs4 import BeautifulSoup
 
 URL = "https://www.ncbrunswick.com/events/"
 
+headers = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 "
+        "(KHTML, like Gecko) "
+        "Chrome/123.0 Safari/537.36"
+    )
+}
+
 response = requests.get(
     URL,
+    headers=headers,
     timeout=30
 )
 
@@ -24,14 +34,11 @@ text = soup.get_text(
 events = []
 
 if "Bowen Strong Invitational" in text:
-
     events.append(
         {
             "title": "Bowen Strong Invitational",
             "location": "Holden Beach Marina",
-            "description": (
-                "Fishing tournament listed on NC Brunswick calendar."
-            ),
+            "description": "Fishing tournament listed on NC Brunswick calendar.",
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-10",
@@ -41,14 +48,11 @@ if "Bowen Strong Invitational" in text:
     )
 
 if "Senior Fraud Prevention Workshop" in text:
-
     events.append(
         {
             "title": "Senior Fraud Prevention Workshop",
             "location": "Town Hall",
-            "description": (
-                "Community workshop listed on NC Brunswick calendar."
-            ),
+            "description": "Community workshop listed on NC Brunswick calendar.",
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-06",
@@ -58,14 +62,11 @@ if "Senior Fraud Prevention Workshop" in text:
     )
 
 if "Mahj at the Marina" in text:
-
     events.append(
         {
             "title": "Mahj at the Marina",
             "location": "Holden Beach Marina",
-            "description": (
-                "Community event listed on NC Brunswick calendar."
-            ),
+            "description": "Community event listed on NC Brunswick calendar.",
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-10",
@@ -78,7 +79,6 @@ with open(
     "ncbrunswick.json",
     "w"
 ) as f:
-
     json.dump(
         events,
         f,
