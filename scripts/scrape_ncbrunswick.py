@@ -20,6 +20,8 @@ response = requests.get(
 
 print(f"Status Code: {response.status_code}")
 
+response.raise_for_status()
+
 soup = BeautifulSoup(
     response.text,
     "html.parser"
@@ -37,12 +39,22 @@ with open(
 ) as f:
     f.write(text)
 
+events = []
+
 with open(
     "ncbrunswick.json",
     "w"
 ) as f:
-    json.dump([], f)
+    json.dump(
+        events,
+        f,
+        indent=2
+    )
 
 print(
     f"Saved raw page text ({len(text)} characters)"
+)
+
+print(
+    f"Saved {len(events)} NC Brunswick events"
 )
