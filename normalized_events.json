@@ -239,46 +239,6 @@
     "end_date": "2026-10-02"
   },
   {
-    "title": "Yoga at Bridgeview Park",
-    "location": "Bridgeview Park, Holden Beach NC",
-    "description": "Beginner friendly yoga class taught by Alice Ledford. Mondays, Wednesdays and Fridays at 9:00 AM.",
-    "url": "",
-    "source": "hobbs-recurring",
-    "event_time": "09:00",
-    "start_date": "2026-10-05",
-    "end_date": "2026-10-05"
-  },
-  {
-    "title": "Yoga at Bridgeview Park",
-    "location": "Bridgeview Park, Holden Beach NC",
-    "description": "Beginner friendly yoga class taught by Alice Ledford. Mondays, Wednesdays and Fridays at 9:00 AM.",
-    "url": "",
-    "source": "hobbs-recurring",
-    "event_time": "09:00",
-    "start_date": "2026-10-07",
-    "end_date": "2026-10-07"
-  },
-  {
-    "title": "Yoga at Bridgeview Park",
-    "location": "Bridgeview Park, Holden Beach NC",
-    "description": "Beginner friendly yoga class taught by Alice Ledford. Mondays, Wednesdays and Fridays at 9:00 AM.",
-    "url": "",
-    "source": "hobbs-recurring",
-    "event_time": "09:00",
-    "start_date": "2026-10-09",
-    "end_date": "2026-10-09"
-  },
-  {
-    "title": "Yoga at Bridgeview Park",
-    "location": "Bridgeview Park, Holden Beach NC",
-    "description": "Beginner friendly yoga class taught by Alice Ledford. Mondays, Wednesdays and Fridays at 9:00 AM.",
-    "url": "",
-    "source": "hobbs-recurring",
-    "event_time": "09:00",
-    "start_date": "2026-10-12",
-    "end_date": "2026-10-12"
-  },
-  {
     "title": "Sunset Beach Market at the Park",
     "location": "Sunset Beach Town Park",
     "description": "Weekly summer market. Thursdays 9:00 AM - 1:00 PM.",
@@ -297,16 +257,6 @@
     "event_time": "09:00",
     "start_date": "2026-10-01",
     "end_date": "2026-10-01"
-  },
-  {
-    "title": "Sunset Beach Market at the Park",
-    "location": "Sunset Beach Town Park",
-    "description": "Weekly summer market. Thursdays 9:00 AM - 1:00 PM.",
-    "url": "",
-    "source": "hobbs-recurring",
-    "event_time": "09:00",
-    "start_date": "2026-10-08",
-    "end_date": "2026-10-08"
   },
   {
     "title": "Bald Head Island Guided Historic Tours",
@@ -357,45 +307,5 @@
     "event_time": "10:00",
     "start_date": "2026-10-03",
     "end_date": "2026-10-03"
-  },
-  {
-    "title": "Bald Head Island Guided Historic Tours",
-    "location": "Bald Head Island",
-    "description": "Guided historic golf cart tour.",
-    "url": "",
-    "source": "coastal-recurring",
-    "event_time": "10:00",
-    "start_date": "2026-10-06",
-    "end_date": "2026-10-06"
-  },
-  {
-    "title": "Bald Head Island Guided Historic Tours",
-    "location": "Bald Head Island",
-    "description": "Guided historic golf cart tour.",
-    "url": "",
-    "source": "coastal-recurring",
-    "event_time": "10:00",
-    "start_date": "2026-10-09",
-    "end_date": "2026-10-09"
-  },
-  {
-    "title": "Bald Head Island Guided Historic Tours",
-    "location": "Bald Head Island",
-    "description": "Guided historic golf cart tour.",
-    "url": "",
-    "source": "coastal-recurring",
-    "event_time": "10:00",
-    "start_date": "2026-10-10",
-    "end_date": "2026-10-10"
-  },
-  {
-    "title": "Bald Head Island Guided Historic Tours",
-    "location": "Bald Head Island",
-    "description": "Guided historic golf cart tour.",
-    "url": "",
-    "source": "coastal-recurring",
-    "event_time": "10:00",
-    "start_date": "2026-10-13",
-    "end_date": "2026-10-13"
   }
 ]
