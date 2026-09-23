@@ -1,33 +1,9 @@
 import json
 import os
-import re
 from datetime import datetime, timedelta
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-
-
-def normalize(text):
-    return (
-        text.lower()
-        .replace("&", "and")
-        .strip()
-    )
-
-
-def clean_url(url):
-    if not url:
-        return ""
-
-    match = re.search(
-        r"https://[^\"<>,\s]+",
-        url
-    )
-
-    if match:
-        return match.group(0)
-
-    return ""
 
 
 def add_emoji(title):
@@ -86,32 +62,50 @@ with open(
     "normalized_events.json",
     "r"
 ) as f:
+
     events = json.load(f)
 
 print()
-print(f"Found {len(events)} normalized events")
+print(
+    f"Found {len(events)} normalized events"
+)
 print()
 
 created = 0
-skipped = 0
 
 for item in events:
 
     title = item["title"]
 
-    existing_events = (
-        service.events()
-        .list(
-            calendarId=calendar_id,
-            q=title,
-            singleEvents=True
-        )
-        .execute()
+    description = item.get(
+        "description",
+        ""
     )
 
-    duplicate_found = False
+    source_name = item.get(
+        "source",
+        ""
+    )
 
-   
+    url = item.get(
+        "url",
+        ""
+    )
+
+    full_description = description
+
+    if source_name:
+
+        full_description += (
+            f"\n\nSource: {source_name}"
+        )
+
+    if url:
+
+        full_description += (
+            f"\n\nMore Information:\n{url}"
+        )
+
     start_date = datetime.strptime(
         item["start_date"],
         "%Y-%m-%d"
@@ -122,83 +116,15 @@ for item in events:
         "%Y-%m-%d"
     )
 
-    url = clean_url(
-        item.get(
-            "url",
-            ""
-        )
-    )
-
-    source_name = item.get(
-        "source",
+    event_time = item.get(
+        "event_time",
         ""
     )
-
-    description = item.get(
-        "description",
-        ""
-    )
-
-    full_description = description
-
-    if source_name:
-        full_description += (
-            f"\n\nSource: {source_name}"
-        )
-
-    if url:
-        full_description += (
-            f"\n\nMore Information:\n{url}"
-        )
-
-  event_key = (
-    f"{normalize(title)}|"
-    f"{item['start_date']}"
-)
-
-duplicate_found = False
-
-existing_events = (
-    service.events()
-    .list(
-        calendarId=calendar_id,
-        q=title,
-        singleEvents=True
-    )
-    .execute()
-)
-
-for existing in existing_events.get(
-    "items",
-    []
-):
-
-    description = existing.get(
-        "description",
-        ""
-    )
-
-    if (
-        f"EVENT_KEY:{event_key}"
-        in description
-    ):
-        duplicate_found = True
-        break
-
-if duplicate_found:
-
-    skipped += 1
-
-    print(
-        f"SKIPPED: {title} "
-        f"({item['start_date']})"
-    )
-
-    continue
 
     #
-    # Timed Events
+    # Timed events
     #
+
     if event_time:
 
         start_dt = datetime.strptime(
@@ -206,7 +132,9 @@ if duplicate_found:
             "%Y-%m-%d %H:%M"
         )
 
-        end_dt = start_dt + timedelta(hours=1)
+        end_dt = start_dt + timedelta(
+            hours=1
+        )
 
         event = {
             "summary": add_emoji(title),
@@ -216,18 +144,23 @@ if duplicate_found:
             ),
             "description": full_description,
             "start": {
-                "dateTime": start_dt.isoformat(),
-                "timeZone": "America/New_York"
+                "dateTime":
+                    start_dt.isoformat(),
+                "timeZone":
+                    "America/New_York"
             },
             "end": {
-                "dateTime": end_dt.isoformat(),
-                "timeZone": "America/New_York"
+                "dateTime":
+                    end_dt.isoformat(),
+                "timeZone":
+                    "America/New_York"
             }
         }
 
     #
-    # All-Day Events
+    # All-day events
     #
+
     else:
 
         event = {
@@ -238,25 +171,20 @@ if duplicate_found:
             ),
             "description": full_description,
             "start": {
-                "date": start_date.strftime(
-                    "%Y-%m-%d"
-                )
+                "date":
+                    start_date.strftime(
+                        "%Y-%m-%d"
+                    )
             },
             "end": {
-                "date": (
-                    end_date +
-                    timedelta(days=1)
-                ).strftime(
-                    "%Y-%m-%d"
-                )
+                "date":
+                    (
+                        end_date +
+                        timedelta(days=1)
+                    ).strftime(
+                        "%Y-%m-%d"
+                    )
             }
-        }
-
-    if url:
-
-        event["source"] = {
-            "title": "Official Event Website",
-            "url": url
         }
 
     service.events().insert(
@@ -266,9 +194,12 @@ if duplicate_found:
 
     created += 1
 
-    print(f"CREATED: {title}")
+    print(
+        f"CREATED: {title}"
+    )
 
 print()
-print(f"Created: {created}")
-print(f"Skipped: {skipped}")
+print(
+    f"Created: {created}"
+)
 print()
