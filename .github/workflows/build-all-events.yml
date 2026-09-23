@@ -26,9 +26,9 @@ jobs:
         run: |
           python scripts/build_all_events.py
 
-- name: Show HB Town Hall Events
-run: |
-cat hbtownhall.json
+      - name: Show HB Town Hall Events
+        run: |
+          cat hbtownhall.json
 
       - name: Show All Events
         run: |
@@ -40,6 +40,7 @@ cat hbtownhall.json
           git config user.email "github-actions@github.com"
 
           git add all_events.json
+          git add hbtownhall.json
 
           git diff --staged --quiet || git commit -m "Update all events"
 
