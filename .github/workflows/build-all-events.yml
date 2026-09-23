@@ -28,11 +28,7 @@ jobs:
 
       - name: Show HB Town Hall Events
         run: |
-          if [ -f hbtownhall.json ]; then
-            cat hbtownhall.json
-          else
-            echo "hbtownhall.json not found"
-          fi
+          cat hbtownhall.json
 
       - name: Show All Events
         run: |
