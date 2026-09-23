@@ -26,9 +26,9 @@ jobs:
         run: |
           python scripts/build_all_events.py
 
-      - name: Show Raw Town Hall Text
-        run: |
-          head -500 hbtownhall_raw.txt
+- name: Show HB Town Hall Events
+run: |
+cat hbtownhall.json
 
       - name: Show All Events
         run: |
