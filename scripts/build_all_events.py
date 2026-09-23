@@ -15,16 +15,6 @@ except Exception as e:
         f"HB Town Hall scraper failed: {e}"
     )
 
-try:
-    subprocess.run(
-        ["python", "scripts/scrape_ncbrunswick.py"],
-        check=True
-    )
-except Exception as e:
-    print(
-        f"NC Brunswick scraper failed: {e}"
-    )
-
 all_events = []
 seen = set()
 
@@ -95,18 +85,9 @@ add_events(
     "coastal"
 )
 
-#
-# New sources
-#
-
 add_events(
     "hbtownhall.json",
     "hbtownhall"
-)
-
-add_events(
-    "ncbrunswick.json",
-    "ncbrunswick"
 )
 
 #
