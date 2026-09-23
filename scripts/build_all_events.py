@@ -11,7 +11,19 @@ try:
         check=True
     )
 except Exception as e:
-    print(f"HB Town Hall scraper failed: {e}")
+    print(
+        f"HB Town Hall scraper failed: {e}"
+    )
+
+try:
+    subprocess.run(
+        ["python", "scripts/scrape_ncbrunswick.py"],
+        check=True
+    )
+except Exception as e:
+    print(
+        f"NC Brunswick scraper failed: {e}"
+    )
 
 all_events = []
 seen = set()
@@ -21,7 +33,11 @@ def add_events(filename, source):
 
     try:
 
-        with open(filename, "r") as f:
+        with open(
+            filename,
+            "r"
+        ) as f:
+
             events = json.load(f)
 
         for event in events:
@@ -80,12 +96,17 @@ add_events(
 )
 
 #
-# New source
+# New sources
 #
 
 add_events(
     "hbtownhall.json",
     "hbtownhall"
+)
+
+add_events(
+    "ncbrunswick.json",
+    "ncbrunswick"
 )
 
 #
