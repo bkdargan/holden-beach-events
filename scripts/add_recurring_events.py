@@ -6,7 +6,7 @@ with open("normalized_events.json", "r") as f:
 
 today = datetime.now()
 
-end_date = today + timedelta(days=90)
+end_date = today + timedelta(days=20)
 
 #
 # Yoga at Bridgeview Park
