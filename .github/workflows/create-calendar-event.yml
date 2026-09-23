@@ -1,33 +1,28 @@
-YAML
 name: Create Calendar Event
- 
+
 on:
-workflow_dispatch:
- 
+  workflow_dispatch:
+
 jobs:
-create-event:
-runs-on: ubuntu-latest
- 
-steps:
-- uses: actions/checkout@v4
- 
-- name: Set up Python
-uses: actions/setup-python@v5
-with:
-python-version: "3.11"
- 
-- name: Install Libraries
-run: |
-pip install google-api-python-client
-pip install google-auth
- 
-- name: Show Normalized Events
-run: |
-cat normalized_events.json
- 
-- name: Create Holden Beach Concert Events
-env:
-GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
-GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
-run: |
-python scripts/create_calendar_event.py
+  create-event:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Libraries
+        run: |
+          pip install google-api-python-client
+          pip install google-auth
+
+      - name: Create Holden Beach Concert Events
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+        run: |
+          python scripts/create_calendar_event.py
