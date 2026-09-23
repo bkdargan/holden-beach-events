@@ -30,9 +30,13 @@ jobs:
         run: |
           cat hbtownhall.json
 
-      - name: Show NC Brunswick Events
-        run: |
-          cat ncbrunswick.json
+- name: Show NC Brunswick Events
+  run: |
+    if [ -f ncbrunswick.json ]; then
+      cat ncbrunswick.json
+    else
+      echo "ncbrunswick.json not found"
+    fi
 
       - name: Show All Events
         run: |
