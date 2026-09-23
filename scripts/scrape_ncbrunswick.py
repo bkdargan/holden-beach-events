@@ -23,10 +23,6 @@ text = soup.get_text(
 
 events = []
 
-#
-# Bowen Strong Invitational
-#
-
 if "Bowen Strong Invitational" in text:
 
     events.append(
@@ -34,7 +30,7 @@ if "Bowen Strong Invitational" in text:
             "title": "Bowen Strong Invitational",
             "location": "Holden Beach Marina",
             "description":
-                "Fishing tournament listed on NC Brunswick Events Calendar.",
+                "Fishing tournament listed on NC Brunswick calendar.",
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-10",
@@ -43,10 +39,6 @@ if "Bowen Strong Invitational" in text:
         }
     )
 
-#
-# Senior Fraud Prevention Workshop
-#
-
 if "Senior Fraud Prevention Workshop" in text:
 
     events.append(
@@ -54,7 +46,7 @@ if "Senior Fraud Prevention Workshop" in text:
             "title": "Senior Fraud Prevention Workshop",
             "location": "Town Hall",
             "description":
-                "Community workshop listed on NC Brunswick Events Calendar.",
+                "Community workshop listed on NC Brunswick calendar.",
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-06",
@@ -63,10 +55,6 @@ if "Senior Fraud Prevention Workshop" in text:
         }
     )
 
-#
-# Mahj at the Marina
-#
-
 if "Mahj at the Marina" in text:
 
     events.append(
@@ -74,7 +62,7 @@ if "Mahj at the Marina" in text:
             "title": "Mahj at the Marina",
             "location": "Holden Beach Marina",
             "description":
-                "Community event listed on NC Brunswick Events Calendar.",
+                "Community event listed on NC Brunswick calendar.",
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-10",
