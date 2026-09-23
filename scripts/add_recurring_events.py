@@ -28,7 +28,7 @@ current = today
 
 while current <= end_date:
 
-    if current.weekday() in [0, 2, 4]:
+    if current.weekday() in [0, 2, 4\]:
 
         events.append(
             {
@@ -41,12 +41,8 @@ while current <= end_date:
                 "url": "",
                 "source": "hobbs-recurring",
                 "event_time": "09:00",
-                "start_date": current.strftime(
-                    "%Y-%m-%d"
-                ),
-                "end_date": current.strftime(
-                    "%Y-%m-%d"
-                )
+                "start_date": current.strftime("%Y-%m-%d"),
+                "end_date": current.strftime("%Y-%m-%d")
             }
         )
 
@@ -73,12 +69,8 @@ while current <= end_date:
                 "url": "",
                 "source": "hobbs-recurring",
                 "event_time": "09:00",
-                "start_date": current.strftime(
-                    "%Y-%m-%d"
-                ),
-                "end_date": current.strftime(
-                    "%Y-%m-%d"
-                )
+                "start_date": current.strftime("%Y-%m-%d"),
+                "end_date": current.strftime("%Y-%m-%d")
             }
         )
 
@@ -92,7 +84,7 @@ current = today
 
 while current <= end_date:
 
-    if current.weekday() in [1, 4, 5]:
+    if current.weekday() in [1, 4, 5\]:
 
         events.append(
             {
@@ -104,12 +96,8 @@ while current <= end_date:
                 "url": "",
                 "source": "coastal-recurring",
                 "event_time": "10:00",
-                "start_date": current.strftime(
-                    "%Y-%m-%d"
-                ),
-                "end_date": current.strftime(
-                    "%Y-%m-%d"
-                )
+                "start_date": current.strftime("%Y-%m-%d"),
+                "end_date": current.strftime("%Y-%m-%d")
             }
         )
 
@@ -120,7 +108,7 @@ with open(
     "w"
 ) as f:
 
-   son.dump(
+    json.dump(
         events,
         f,
         indent=2
