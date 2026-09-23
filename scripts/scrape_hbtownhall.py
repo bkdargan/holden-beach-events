@@ -34,8 +34,8 @@ if "Programs - Yoga" in text:
             "title": "Programs - Yoga",
             "location": "Block Q Stage, Holden Beach NC",
             "description": (
-                "The Town of Holden Beach offers beginner friendly yoga "
-                "classes on Mondays, Wednesdays and Fridays at 10:00 AM."
+                "The Town of Holden Beach offers beginner friendly yoga classes "
+                "on Mondays, Wednesdays and Fridays at 10:00 AM."
             ),
             "url": URL,
             "source": "hbtownhall",
@@ -76,8 +76,8 @@ if "Pickleball" in text:
             "title": "Programs - Pickleball",
             "location": "Bridgeview Park, Holden Beach NC",
             "description": (
-                "Pickleball play on Tuesdays, Thursdays and Saturdays "
-                "from 10:00 AM to 1:00 PM."
+                "Open pickleball play on Tuesdays, Thursdays and Saturdays "
+                "from 10:00 AM - 1:00 PM."
             ),
             "url": URL,
             "source": "hbtownhall",
