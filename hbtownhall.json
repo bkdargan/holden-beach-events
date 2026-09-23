@@ -1,0 +1,40 @@
+[
+  {
+    "title": "Programs - Yoga",
+    "location": "Holden Beach",
+    "description": "Program discovered on Holden Beach Town Hall Parks & Recreation page.",
+    "url": "https://hbtownhall.com/parks-%26-recreation",
+    "source": "hbtownhall",
+    "event_time": "10:00",
+    "recurring_pattern": "MWF"
+  },
+  {
+    "title": "Programs - Yoga Sculpt",
+    "location": "Holden Beach",
+    "description": "Program discovered on Holden Beach Town Hall Parks & Recreation page.",
+    "url": "https://hbtownhall.com/parks-%26-recreation",
+    "source": "hbtownhall",
+    "event_time": "09:00",
+    "recurring_pattern": "MWF"
+  },
+  {
+    "title": "Monster Mash Trunk-or-Treat",
+    "location": "Bridgeview Park",
+    "description": "Community trunk-or-treat event.",
+    "url": "https://hbtownhall.com/parks-%26-recreation",
+    "source": "hbtownhall",
+    "start_date": "2026-10-30",
+    "end_date": "2026-10-30",
+    "event_time": "17:30"
+  },
+  {
+    "title": "Barktoberfest",
+    "location": "Bridgeview Park",
+    "description": "Dog parade and costume contest.",
+    "url": "https://hbtownhall.com/parks-%26-recreation",
+    "source": "hbtownhall",
+    "start_date": "2026-10-30",
+    "end_date": "2026-10-30",
+    "event_time": "16:30"
+  }
+]
