@@ -44,6 +44,80 @@ def add_emoji(title):
     return title
 
 
+def timed_event_exists(
+    service,
+    calendar_id,
+    title,
+    start_dt
+):
+
+    results = service.events().list(
+        calendarId=calendar_id,
+        timeMin=(
+            start_dt -
+            timedelta(minutes=1)
+        ).isoformat(),
+        timeMax=(
+            start_dt +
+            timedelta(minutes=1)
+        ).isoformat(),
+        singleEvents=True
+    ).execute()
+
+    for item in results.get(
+        "items",
+        []
+    ):
+
+        if item.get(
+            "summary",
+            ""
+        ) == add_emoji(title):
+
+            return True
+
+    return False
+
+
+def allday_event_exists(
+    service,
+    calendar_id,
+    title,
+    event_date
+):
+
+    start_search = datetime.strptime(
+        event_date,
+        "%Y-%m-%d"
+    )
+
+    end_search = (
+        start_search +
+        timedelta(days=1)
+    )
+
+    results = service.events().list(
+        calendarId=calendar_id,
+        timeMin=start_search.isoformat(),
+        timeMax=end_search.isoformat(),
+        singleEvents=True
+    ).execute()
+
+    for item in results.get(
+        "items",
+        []
+    ):
+
+        if item.get(
+            "summary",
+            ""
+        ) == add_emoji(title):
+
+            return True
+
+    return False
+
+
 credentials_json = json.loads(
     os.environ["GOOGLE_CREDENTIALS"]
 )
@@ -87,6 +161,7 @@ print(
 print()
 
 created = 0
+skipped = 0
 
 today = datetime.now()
 
@@ -101,10 +176,6 @@ for item in events:
         item["start_date"],
         "%Y-%m-%d"
     )
-
-    #
-    # ONLY INCLUDE EVENTS IN IMPORT WINDOW
-    #
 
     if event_date < today:
         continue
@@ -173,6 +244,21 @@ for item in events:
             hours=1
         )
 
+        if timed_event_exists(
+            service,
+            calendar_id,
+            title,
+            start_dt
+        ):
+
+            skipped += 1
+
+            print(
+                f"SKIPPED (already exists): {title}"
+            )
+
+            continue
+
         event = {
             "summary": add_emoji(title),
             "location": item.get(
@@ -195,6 +281,21 @@ for item in events:
     #
 
     else:
+
+        if allday_event_exists(
+            service,
+            calendar_id,
+            title,
+            item["start_date"]
+        ):
+
+            skipped += 1
+
+            print(
+                f"SKIPPED (already exists): {title}"
+            )
+
+            continue
 
         event = {
             "summary": add_emoji(title),
@@ -233,4 +334,9 @@ print()
 print(
     f"Created: {created}"
 )
+
+print(
+    f"Skipped: {skipped}"
+)
+
 print()
