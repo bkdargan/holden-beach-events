@@ -51,18 +51,12 @@ def timed_event_exists(
     start_dt
 ):
 
-    results = service.events().list(
-        calendarId=calendar_id,
-        timeMin=(
-            start_dt -
-            timedelta(minutes=1)
-        ).isoformat(),
-        timeMax=(
-            start_dt +
-            timedelta(minutes=1)
-        ).isoformat(),
-        singleEvents=True
-    ).execute()
+results = service.events().list(
+calendarId=calendar_id,
+timeMin=start_search.isoformat() + "Z",
+timeMax=end_search.isoformat() + "Z",
+singleEvents=True
+).execute()
 
     for item in results.get(
         "items",
