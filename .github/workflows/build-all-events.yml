@@ -1,133 +1,52 @@
-import json
-import subprocess
+name: Build All Events
 
-#
-# Run scrapers first
-#
+on:
+  workflow_dispatch:
 
-try:
-    subprocess.run(
-        ["python", "scripts/scrape_hbtownhall.py"],
-        check=True
-    )
-except Exception as e:
-    print(
-        f"HB Town Hall scraper failed: {e}"
-    )
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-try:
-    subprocess.run(
-        ["python", "scripts/scrape_ncbrunswick.py"],
-        check=True
-    )
-except Exception as e:
-    print(
-        f"NC Brunswick scraper failed: {e}"
-    )
+    permissions:
+      contents: write
 
-all_events = []
-seen = set()
+    steps:
+      - uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-def add_events(filename, source):
+      - name: Install Dependencies
+        run: |
+          pip install requests beautifulsoup4
 
-    try:
+      - name: Build All Events
+        run: |
+          python scripts/build_all_events.py
 
-        with open(
-            filename,
-            "r"
-        ) as f:
+      - name: Show HB Town Hall Events
+        run: |
+          cat hbtownhall.json
 
-            events = json.load(f)
+      - name: Show NC Brunswick Events
+        run: |
+          cat ncbrunswick.json
 
-        for event in events:
+      - name: Show All Events
+        run: |
+          cat all_events.json
 
-            key = (
-                event.get(
-                    "title",
-                    ""
-                )
-                .lower()
-                .strip()
-            )
+      - name: Commit All Events
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
 
-            if key not in seen:
+          git add all_events.json
+          git add hbtownhall.json
+          git add ncbrunswick.json
 
-                seen.add(key)
+          git diff --staged --quiet || git commit -m "Update all events"
 
-                event["source"] = source
-
-                all_events.append(event)
-
-        print(
-            f"Loaded {len(events)} events from {filename}"
-        )
-
-    except FileNotFoundError:
-
-        print(
-            f"{filename} not found"
-        )
-
-    except Exception as e:
-
-        print(
-            f"Error reading {filename}: {e}"
-        )
-
-
-#
-# Existing sources
-#
-
-add_events(
-    "concerts.json",
-    "concerts"
-)
-
-add_events(
-    "hobbs_events.json",
-    "hobbs"
-)
-
-add_events(
-    "coastal_events.json",
-    "coastal"
-)
-
-#
-# New sources
-#
-
-add_events(
-    "hbtownhall.json",
-    "hbtownhall"
-)
-
-add_events(
-    "ncbrunswick.json",
-    "ncbrunswick"
-)
-
-#
-# Save combined file
-#
-
-with open(
-    "all_events.json",
-    "w"
-) as f:
-
-    json.dump(
-        all_events,
-        f,
-        indent=2
-    )
-
-print()
-
-print(
-    f"Created all_events.json with {len(all_events)} events"
-)
-
-print()
+          git push
