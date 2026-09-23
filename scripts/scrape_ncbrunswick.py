@@ -29,8 +29,9 @@ if "Bowen Strong Invitational" in text:
         {
             "title": "Bowen Strong Invitational",
             "location": "Holden Beach Marina",
-            "description":
-                "Fishing tournament listed on NC Brunswick calendar.",
+            "description": (
+                "Fishing tournament listed on NC Brunswick calendar."
+            ),
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-10",
@@ -45,8 +46,9 @@ if "Senior Fraud Prevention Workshop" in text:
         {
             "title": "Senior Fraud Prevention Workshop",
             "location": "Town Hall",
-            "description":
-                "Community workshop listed on NC Brunswick calendar.",
+            "description": (
+                "Community workshop listed on NC Brunswick calendar."
+            ),
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-06",
@@ -61,8 +63,9 @@ if "Mahj at the Marina" in text:
         {
             "title": "Mahj at the Marina",
             "location": "Holden Beach Marina",
-            "description":
-                "Community event listed on NC Brunswick calendar.",
+            "description": (
+                "Community event listed on NC Brunswick calendar."
+            ),
             "url": URL,
             "source": "ncbrunswick",
             "start_date": "2026-10-10",
