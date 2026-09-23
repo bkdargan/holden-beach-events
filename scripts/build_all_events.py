@@ -1,7 +1,21 @@
 import json
+import subprocess
+
+#
+# Run scrapers first
+#
+
+try:
+    subprocess.run(
+        ["python", "scripts/scrape_hbtownhall.py"],
+        check=True
+    )
+except Exception as e:
+    print(f"HB Town Hall scraper failed: {e}")
 
 all_events = []
 seen = set()
+
 
 def add_events(filename, source):
 
@@ -12,7 +26,14 @@ def add_events(filename, source):
 
         for event in events:
 
-            key = event["title"].lower().strip()
+            key = (
+                event.get(
+                    "title",
+                    ""
+                )
+                .lower()
+                .strip()
+            )
 
             if key not in seen:
 
@@ -22,15 +43,70 @@ def add_events(filename, source):
 
                 all_events.append(event)
 
+        print(
+            f"Loaded {len(events)} events from {filename}"
+        )
+
     except FileNotFoundError:
 
-        print(f"{filename} not found")
+        print(
+            f"{filename} not found"
+        )
 
-add_events("concerts.json", "concerts")
-add_events("hobbs_events.json", "hobbs")
-add_events("coastal_events.json", "coastal")
+    except Exception as e:
 
-with open("all_events.json", "w") as f:
-    json.dump(all_events, f, indent=2)
+        print(
+            f"Error reading {filename}: {e}"
+        )
 
-print(f"Created all_events.json with {len(all_events)} events")
+
+#
+# Existing sources
+#
+
+add_events(
+    "concerts.json",
+    "concerts"
+)
+
+add_events(
+    "hobbs_events.json",
+    "hobbs"
+)
+
+add_events(
+    "coastal_events.json",
+    "coastal"
+)
+
+#
+# New source
+#
+
+add_events(
+    "hbtownhall.json",
+    "hbtownhall"
+)
+
+#
+# Save combined file
+#
+
+with open(
+    "all_events.json",
+    "w"
+) as f:
+
+    json.dump(
+        all_events,
+        f,
+        indent=2
+    )
+
+print()
+
+print(
+    f"Created all_events.json with {len(all_events)} events"
+)
+
+print()
