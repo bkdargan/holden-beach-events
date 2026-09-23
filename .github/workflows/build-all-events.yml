@@ -30,6 +30,14 @@ jobs:
         run: |
           cat hbtownhall.json
 
+      - name: Show NC Brunswick Raw Text
+        run: |
+          if [ -f ncbrunswick_raw.txt ]; then
+            head -300 ncbrunswick_raw.txt
+          else
+            echo "ncbrunswick_raw.txt not found"
+          fi
+
       - name: Show NC Brunswick Events
         run: |
           if [ -f ncbrunswick.json ]; then
@@ -52,6 +60,10 @@ jobs:
 
           if [ -f ncbrunswick.json ]; then
             git add ncbrunswick.json
+          fi
+
+          if [ -f ncbrunswick_raw.txt ]; then
+            git add ncbrunswick_raw.txt
           fi
 
           git diff --staged --quiet || git commit -m "Update all events"
