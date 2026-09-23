@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 #
 # CALENDAR SETTINGS
 #
-IMPORT_WINDOW_DAYS = 30
+IMPORT_WINDOW_DAYS = 10
 
 TIMEZONE = "America/New_York"
 
