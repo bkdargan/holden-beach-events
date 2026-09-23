@@ -13,9 +13,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install requests beautifulsoup4
+
       - name: Build All Events
         run: |
           python scripts/build_all_events.py
+
+      - name: Show HB Town Hall Events
+        run: |
+          if [ -f hbtownhall.json ]; then
+            cat hbtownhall.json
+          else
+            echo "hbtownhall.json not found"
+          fi
 
       - name: Show All Events
         run: |
@@ -27,6 +44,7 @@ jobs:
           git config user.email "github-actions@github.com"
 
           git add all_events.json
+          git add hbtownhall.json
 
           git diff --staged --quiet || git commit -m "Update all events"
 
