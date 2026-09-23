@@ -73,7 +73,25 @@ print()
 
 created = 0
 
+today = datetime.now()
+window_end = today + timedelta(days=30)
+
 for item in events:
+
+    event_date = datetime.strptime(
+        item["start_date"],
+        "%Y-%m-%d"
+    )
+
+    #
+    # ONLY INCLUDE EVENTS IN NEXT 30 DAYS
+    #
+
+    if event_date < today:
+        continue
+
+    if event_date > window_end:
+        continue
 
     title = item["title"]
 
@@ -122,7 +140,7 @@ for item in events:
     )
 
     #
-    # Timed events
+    # TIMED EVENTS
     #
 
     if event_time:
@@ -144,21 +162,17 @@ for item in events:
             ),
             "description": full_description,
             "start": {
-                "dateTime":
-                    start_dt.isoformat(),
-                "timeZone":
-                    "America/New_York"
+                "dateTime": start_dt.isoformat(),
+                "timeZone": "America/New_York"
             },
             "end": {
-                "dateTime":
-                    end_dt.isoformat(),
-                "timeZone":
-                    "America/New_York"
+                "dateTime": end_dt.isoformat(),
+                "timeZone": "America/New_York"
             }
         }
 
     #
-    # All-day events
+    # ALL-DAY EVENTS
     #
 
     else:
@@ -171,19 +185,17 @@ for item in events:
             ),
             "description": full_description,
             "start": {
-                "date":
-                    start_date.strftime(
-                        "%Y-%m-%d"
-                    )
+                "date": start_date.strftime(
+                    "%Y-%m-%d"
+                )
             },
             "end": {
-                "date":
-                    (
-                        end_date +
-                        timedelta(days=1)
-                    ).strftime(
-                        "%Y-%m-%d"
-                    )
+                "date": (
+                    end_date +
+                    timedelta(days=1)
+                ).strftime(
+                    "%Y-%m-%d"
+                )
             }
         }
 
