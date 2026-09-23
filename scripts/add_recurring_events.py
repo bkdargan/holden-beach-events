@@ -28,7 +28,7 @@ current = today
 
 while current <= end_date:
 
-    if current.weekday() in [0, 2, 4\]:
+    if current.weekday() in [0, 2, 4]:
 
         events.append(
             {
@@ -84,7 +84,7 @@ current = today
 
 while current <= end_date:
 
-    if current.weekday() in [1, 4, 5\]:
+    if current.weekday() in [1, 4, 5]:
 
         events.append(
             {
