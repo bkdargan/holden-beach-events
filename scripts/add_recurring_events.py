@@ -1,12 +1,24 @@
 import json
 from datetime import datetime, timedelta
 
-with open("normalized_events.json", "r") as f:
+#
+# RECURRING EVENT SETTINGS
+#
+RECURRING_WINDOW_DAYS = 10
+
+with open(
+    "normalized_events.json",
+    "r"
+) as f:
+
     events = json.load(f)
 
 today = datetime.now()
 
-end_date = today + timedelta(days=10)
+end_date = (
+    today +
+    timedelta(days=RECURRING_WINDOW_DAYS)
+)
 
 #
 # Yoga at Bridgeview Park
@@ -16,7 +28,7 @@ current = today
 
 while current <= end_date:
 
-    if current.weekday() in [0, 2, 4]:
+    if current.weekday() in [0, 2, 4\]:
 
         events.append(
             {
@@ -29,8 +41,12 @@ while current <= end_date:
                 "url": "",
                 "source": "hobbs-recurring",
                 "event_time": "09:00",
-                "start_date": current.strftime("%Y-%m-%d"),
-                "end_date": current.strftime("%Y-%m-%d")
+                "start_date": current.strftime(
+                    "%Y-%m-%d"
+                ),
+                "end_date": current.strftime(
+                    "%Y-%m-%d"
+                )
             }
         )
 
@@ -57,8 +73,12 @@ while current <= end_date:
                 "url": "",
                 "source": "hobbs-recurring",
                 "event_time": "09:00",
-                "start_date": current.strftime("%Y-%m-%d"),
-                "end_date": current.strftime("%Y-%m-%d")
+                "start_date": current.strftime(
+                    "%Y-%m-%d"
+                ),
+                "end_date": current.strftime(
+                    "%Y-%m-%d"
+                )
             }
         )
 
@@ -72,7 +92,7 @@ current = today
 
 while current <= end_date:
 
-    if current.weekday() in [1, 4, 5]:
+    if current.weekday() in [1, 4, 5\]:
 
         events.append(
             {
@@ -84,14 +104,34 @@ while current <= end_date:
                 "url": "",
                 "source": "coastal-recurring",
                 "event_time": "10:00",
-                "start_date": current.strftime("%Y-%m-%d"),
-                "end_date": current.strftime("%Y-%m-%d")
+                "start_date": current.strftime(
+                    "%Y-%m-%d"
+                ),
+                "end_date": current.strftime(
+                    "%Y-%m-%d"
+                )
             }
         )
 
     current += timedelta(days=1)
 
-with open("normalized_events.json", "w") as f:
-    json.dump(events, f, indent=2)
+with open(
+    "normalized_events.json",
+    "w"
+) as f:
 
-print(f"Final event count: {len(events)}")
+   son.dump(
+        events,
+        f,
+        indent=2
+    )
+
+print()
+print(
+    f"Recurring window: {RECURRING_WINDOW_DAYS} days"
+)
+
+print(
+    f"Final event count: {len(events)}"
+)
+print()
