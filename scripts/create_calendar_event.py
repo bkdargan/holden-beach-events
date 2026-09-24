@@ -13,6 +13,15 @@ IMPORT_WINDOW_DAYS = 10
 TIMEZONE = "America/New_York"
 
 
+def build_event_key(item):
+
+    return (
+        f"{item['title']}|"
+        f"{item['start_date']}|"
+        f"{item.get('event_time', '')}"
+    )
+
+
 def add_emoji(title):
 
     lower = title.lower()
@@ -43,7 +52,6 @@ def add_emoji(title):
 
     return title
 
-
 credentials_json = json.loads(
     os.environ["GOOGLE_CREDENTIALS"]
 )
@@ -67,7 +75,42 @@ service = build(
     "v3",
     credentials=credentials
 )
+#
+# LOAD EXISTING SCRIPT-CREATED EVENTS
+#
 
+existing_keys = set()
+
+calendar_events = service.events().list(
+    calendarId=calendar_id,
+    maxResults=2500,
+    singleEvents=True
+).execute()
+
+for existing_event in calendar_events.get(
+    "items",
+    []
+):
+
+    description = existing_event.get(
+        "description",
+        ""
+    )
+
+    if "EVENT_KEY:" in description:
+
+        for line in description.splitlines():
+
+            if line.startswith(
+                "EVENT_KEY:"
+            ):
+
+                existing_keys.add(
+                    line.replace(
+                        "EVENT_KEY:",
+                        ""
+                    ).strip()
+                )
 with open(
     "normalized_events.json",
     "r"
@@ -112,7 +155,19 @@ for item in events:
     if event_date > window_end:
         continue
 
-    title = item["title"]
+title = item["title"]
+
+event_key = build_event_key(
+    item
+)
+
+if event_key in existing_keys:
+
+    print(
+        f"SKIPPED (duplicate): {title}"
+    )
+
+    continue
 
     description = item.get(
         "description",
@@ -129,7 +184,11 @@ for item in events:
         ""
     )
 
-    full_description = description
+full_description = (
+    description +
+    f"\n\nEVENT_KEY:{event_key}"
+)
+`
 
     if source_name:
 
