@@ -1,0 +1,71 @@
+name: Daily Holden Beach Update
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 10 * * *"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Libraries
+        run: |
+          pip install requests
+          pip install beautifulsoup4
+          pip install google-api-python-client
+          pip install google-auth
+
+      - name: Show Trigger Information
+        run: |
+          echo "Trigger Type: ${{ github.event_name }}"
+          echo "Automatic Schedule: Daily at 6:00 AM Raleigh time"
+          echo "Cron Schedule: 0 10 * * *"
+
+      - name: Build All Events
+        run: |
+          python scripts/build_all_events.py
+
+      - name: Normalize Events
+        run: |
+          python scripts/normalize_events.py
+
+      - name: Add Recurring Events
+        run: |
+          python scripts/add_recurring_events.py
+
+      - name: Show Final Event Count
+        run: |
+          python -c "import json; print(f'Events Ready For Calendar: {len(json.load(open(\"normalized_events.json\")))}')"
+
+      - name: Update Google Calendar
+        env:
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+        run: |
+          python scripts/create_calendar_event.py
+
+      - name: Commit Updated Files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add all_events.json
+          git add normalized_events.json
+          git add hbtownhall.json
+
+          git diff --staged --quiet || git commit -m "Daily event update"
+
+          git push
