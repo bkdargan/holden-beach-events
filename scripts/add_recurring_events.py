@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 #
 # RECURRING EVENT SETTINGS
 #
-RECURRING_WINDOW_DAYS = 60
+RECURRING_WINDOW_DAYS = 15
 
 with open(
     "normalized_events.json",
