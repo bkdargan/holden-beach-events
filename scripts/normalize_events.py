@@ -252,17 +252,13 @@ for event in all_events:
 
     dates = extract_dates(event)
 
-if not dates:
+    if not dates:
 
-    print(
-        f"NO DATE FOUND: {event['title']}"
-    )
+        skipped.append(
+            event["title"]
+        )
 
-    skipped.append(
-        event["title"]
-    )
-
-    continue
+        continue
 
     key = (
         event["title"]
@@ -275,42 +271,42 @@ if not dates:
 
     seen.add(key)
 
-normalized.append(
-    {
-        "title": event["title"],
-        "location":
-            clean_location(
-                event.get(
-                    "location",
-                    ""
-                )
-            ),
-        "description":
-            event.get(
-                "description",
-                ""
-            ),
-        "url":
-            CUSTOM_URLS.get(
-                event["title"],
-                extract_url(
+    normalized.append(
+        {
+            "title": event["title"],
+            "location":
+                clean_location(
                     event.get(
-                        "url",
+                        "location",
                         ""
                     )
-                )
-            ),
-        "source":
-            event.get(
-                "source",
-                ""
-            ),
-        "start_date":
-            dates["start_date"],
-        "end_date":
-            dates["end_date"]
-    }
-)
+                ),
+            "description":
+                event.get(
+                    "description",
+                    ""
+                ),
+            "url":
+                CUSTOM_URLS.get(
+                    event["title"],
+                    extract_url(
+                        event.get(
+                            "url",
+                            ""
+                        )
+                    )
+                ),
+            "source":
+                event.get(
+                    "source",
+                    ""
+                ),
+            "start_date":
+                dates["start_date"],
+            "end_date":
+                dates["end_date"]
+        }
+    )
 
 with open(
     OUTPUT_FILE,
