@@ -252,13 +252,17 @@ for event in all_events:
 
     dates = extract_dates(event)
 
-    if not dates:
+if not dates:
 
-        skipped.append(
-            event["title"]
-        )
+    print(
+        f"NO DATE FOUND: {event['title']}"
+    )
 
-        continue
+    skipped.append(
+        event["title"]
+    )
+
+    continue
 
     key = (
         event["title"]
