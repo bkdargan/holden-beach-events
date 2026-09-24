@@ -188,7 +188,6 @@ full_description = (
     description +
     f"\n\nEVENT_KEY:{event_key}"
 )
-`
 
     if source_name:
 
