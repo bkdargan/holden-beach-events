@@ -148,26 +148,19 @@ for item in events:
     #
     # ONLY INCLUDE EVENTS IN IMPORT WINDOW
     #
+    title = item["title"]
 
-    if event_date < today:
-        continue
-
-    if event_date > window_end:
-        continue
-
-title = item["title"]
-
-event_key = build_event_key(
-    item
-)
-
-if event_key in existing_keys:
-
-    print(
-        f"SKIPPED (duplicate): {title}"
+    event_key = build_event_key(
+        item
     )
 
-    continue
+    if event_key in existing_keys:
+
+        print(
+            f"SKIPPED (duplicate): {title}"
+        )
+
+        continue
 
     description = item.get(
         "description",
@@ -184,11 +177,15 @@ if event_key in existing_keys:
         ""
     )
 
-full_description = (
-    description +
-    f"\n\nEVENT_KEY:{event_key}"
-)
+    full_description = (
+        description +
+        f"\n\nEVENT_KEY:{event_key}"
+    )
+    if event_date < today:
+        continue
 
+    if event_date > window_end:
+        continue
     if source_name:
 
         full_description += (
