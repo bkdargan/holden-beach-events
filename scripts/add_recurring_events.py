@@ -93,7 +93,7 @@ while current <= end_date:
                 "description": (
                     "Guided historic golf cart tour."
                 ),
-                "url": "",
+                "url": "https://www.oldbaldy.org/tours",
                 "source": "coastal-recurring",
                 "event_time": "10:00",
                 "start_date": current.strftime("%Y-%m-%d"),
