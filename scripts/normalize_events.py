@@ -18,7 +18,25 @@ MONTHS = {
     "November": "11",
     "December": "12"
 }
+CUSTOM_URLS = {
+    "Bald Head Island Guided Historic Tours":
+        "https://www.oldbaldy.org/tours",
 
+    "Yoga at Bridgeview Park":
+        "https://www.hbtownhall.com/parks-%26-recreation",
+
+    "Sunset Beach Market at the Park":
+        "https://www.sunsetbeachnc.gov/",
+
+    "North Carolina Oyster Festival":
+        "https://ncoysterfestival.com/",
+
+    "North Carolina Festival by the Sea at Holden Beach":
+        "https://festivalbythesea.info/",
+
+    "Festival by the Sea at Holden Beach":
+        "https://festivalbythesea.info/"
+}
 
 def clean_location(location):
 
@@ -253,39 +271,42 @@ for event in all_events:
 
     seen.add(key)
 
-    normalized.append(
-        {
-            "title": event["title"],
-            "location":
-                clean_location(
-                    event.get(
-                        "location",
-                        ""
-                    )
-                ),
-            "description":
+normalized.append(
+    {
+        "title": event["title"],
+        "location":
+            clean_location(
                 event.get(
-                    "description",
+                    "location",
                     ""
-                ),
-            "url":
+                )
+            ),
+        "description":
+            event.get(
+                "description",
+                ""
+            ),
+        "url":
+            CUSTOM_URLS.get(
+                event["title"],
                 extract_url(
                     event.get(
                         "url",
                         ""
                     )
-                ),
-            "source":
-                event.get(
-                    "source",
-                    ""
-                ),
-            "start_date":
-                dates["start_date"],
-            "end_date":
-                dates["end_date"]
-        }
-    )
+                )
+            ),
+        "source":
+            event.get(
+                "source",
+                ""
+            ),
+        "start_date":
+            dates["start_date"],
+        "end_date":
+            dates["end_date"]
+    }
+)
 
 with open(
     OUTPUT_FILE,
