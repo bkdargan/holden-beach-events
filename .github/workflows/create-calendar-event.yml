@@ -3,6 +3,9 @@ name: Create Calendar Event
 on:
   workflow_dispatch:
 
+  schedule:
+    - cron: "0 6 * * *"
+
 jobs:
   create-event:
     runs-on: ubuntu-latest
