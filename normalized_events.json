@@ -265,16 +265,6 @@
     "url": "",
     "source": "hobbs-recurring",
     "event_time": "09:00",
-    "start_date": "2026-09-24",
-    "end_date": "2026-09-24"
-  },
-  {
-    "title": "Sunset Beach Market at the Park",
-    "location": "Sunset Beach Town Park",
-    "description": "Weekly summer market. Thursdays 9:00 AM - 1:00 PM.",
-    "url": "",
-    "source": "hobbs-recurring",
-    "event_time": "09:00",
     "start_date": "2026-10-01",
     "end_date": "2026-10-01"
   },
@@ -357,5 +347,15 @@
     "event_time": "10:00",
     "start_date": "2026-10-09",
     "end_date": "2026-10-09"
+  },
+  {
+    "title": "Bald Head Island Guided Historic Tours",
+    "location": "Bald Head Island",
+    "description": "Guided historic golf cart tour.",
+    "url": "https://www.oldbaldy.org/tours",
+    "source": "coastal-recurring",
+    "event_time": "10:00",
+    "start_date": "2026-10-10",
+    "end_date": "2026-10-10"
   }
 ]
