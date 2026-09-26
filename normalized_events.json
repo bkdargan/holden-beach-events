@@ -195,16 +195,6 @@
     "url": "",
     "source": "hobbs-recurring",
     "event_time": "09:00",
-    "start_date": "2026-09-25",
-    "end_date": "2026-09-25"
-  },
-  {
-    "title": "Yoga at Bridgeview Park",
-    "location": "Bridgeview Park, Holden Beach NC",
-    "description": "Beginner friendly yoga class taught by Alice Ledford. Mondays, Wednesdays and Fridays at 9:00 AM.",
-    "url": "",
-    "source": "hobbs-recurring",
-    "event_time": "09:00",
     "start_date": "2026-09-28",
     "end_date": "2026-09-28"
   },
@@ -277,16 +267,6 @@
     "event_time": "09:00",
     "start_date": "2026-10-08",
     "end_date": "2026-10-08"
-  },
-  {
-    "title": "Bald Head Island Guided Historic Tours",
-    "location": "Bald Head Island",
-    "description": "Guided historic golf cart tour.",
-    "url": "https://www.oldbaldy.org/tours",
-    "source": "coastal-recurring",
-    "event_time": "10:00",
-    "start_date": "2026-09-25",
-    "end_date": "2026-09-25"
   },
   {
     "title": "Bald Head Island Guided Historic Tours",
