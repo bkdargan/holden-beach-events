@@ -1,0 +1,18 @@
+name: Create Test Event
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Write Credentials File
+        run: |
+          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > credentials.json
+
+      - name: Verify Credentials File
+        run: |
+          echo "File created successfully"
+          wc -c credentials.json
