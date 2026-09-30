@@ -1,0 +1,9 @@
+{
+  "sources": [
+    {
+      "name": "brunswick",
+      "url": "https://www.ncbrunswick.com/events/",
+      "link_contains": "/events/"
+    }
+  ]
+}
